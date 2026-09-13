@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Jaza — Plak Kütüphanesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#25120C; --surface-1:#331C13; --surface-2:#3E2417;
+    --border:rgba(232,201,163,0.13); --border-strong:rgba(232,201,163,0.26);
+    --copper-400:#D88A54; --copper-500:#C97B4A; --amber-glow:#E8A868;
+    --cream:#F3E9DC; --taupe:#B7A491; --taupe-dim:#93816E; --mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:#150A06; font-family:'Inter',sans-serif; padding:48px 20px; }
+  .stage{ max-width:380px; margin:0 auto; }
+  .phone{
+    position:relative; background:var(--bg); border-radius:40px; border:8px solid #0B0704;
+    padding:0 0 24px; box-shadow:0 40px 80px rgba(0,0,0,0.55); overflow:hidden; min-height:640px;
+  }
+  .status-bar{ font-family:var(--mono); display:flex; justify-content:space-between; font-size:11px; color:var(--taupe); padding:14px 20px 6px; }
+
+  .head{ display:flex; align-items:center; gap:12px; padding:6px 20px 16px; }
+  .back-btn{
+    width:30px; height:30px; border-radius:50%; border:0.5px solid var(--border-strong); background:transparent;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; text-decoration:none;
+  }
+  .head-title{ font-family:'Fraunces',serif; font-style:italic; font-size:21px; color:var(--cream); margin:0; }
+  .head-sub{ font-family:var(--mono); font-size:10.5px; color:var(--taupe-dim); margin:2px 0 0; }
+
+  .content{ padding:0 20px; }
+  .search{
+    width:100%; background:var(--surface-1); border:0.5px solid var(--border); border-radius:10px;
+    padding:10px 14px; color:var(--cream); font-family:'Inter',sans-serif; font-size:13px; margin-bottom:14px;
+  }
+  .search::placeholder{ color:var(--taupe-dim); }
+
+  .feature-card{
+    display:flex; align-items:center; gap:13px; cursor:pointer; margin-bottom:20px;
+    background:linear-gradient(135deg, rgba(232,168,104,0.10), transparent 60%),
+               linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 45%), var(--surface-1);
+    border:0.5px solid var(--border); border-radius:14px; padding:14px 15px;
+  }
+  .mascot{ width:48px; height:48px; flex-shrink:0; }
+  .feature-label{ font-family:var(--mono); font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber-glow); margin:0 0 4px; }
+  .feature-title{ font-family:'Fraunces',serif; font-size:14.5px; color:var(--cream); margin:0 0 2px; }
+  .feature-artist{ font-family:var(--mono); font-size:10.5px; color:var(--taupe-dim); margin:0 0 5px; }
+  .feature-note{ font-family:'Fraunces',serif; font-style:italic; font-size:11.5px; color:var(--taupe); margin:0; }
+  .mascot-picker{ display:flex; align-items:center; gap:8px; margin:-10px 0 20px; }
+  .mascot-picker span{ font-family:var(--mono); font-size:10px; color:var(--taupe-dim); }
+  .mascot-picker button{
+    width:24px; height:24px; border-radius:50%; border:0.5px solid var(--border-strong); background:transparent;
+    color:var(--taupe); font-family:var(--mono); font-size:10.5px; cursor:pointer;
+  }
+  .mascot-picker button.active{ background:var(--copper-500); color:#231409; border-color:var(--copper-500); }
+
+  .seg{ display:flex; gap:6px; background:var(--surface-1); border:0.5px solid var(--border); border-radius:100px; padding:3px; margin-bottom:18px; }
+  .seg button{
+    flex:1; border:none; background:transparent; color:var(--taupe); font-family:var(--mono); font-size:11px;
+    letter-spacing:0.04em; text-transform:uppercase; padding:8px 0; border-radius:100px; cursor:pointer; transition:background .2s ease, color .2s ease;
+  }
+  .seg button.active{ background:var(--copper-500); color:#231409; }
+
+  .group-head{ display:flex; align-items:center; gap:8px; margin:18px 0 10px; }
+  .group-head .dot{ width:7px; height:7px; border-radius:50%; }
+  .group-head span{ font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--taupe); }
+  .group-head:first-child{ margin-top:0; }
+
+  .rec-row{
+    display:flex; align-items:center; gap:11px; padding:9px 8px; border-radius:10px; cursor:pointer;
+    transition:background .15s ease;
+  }
+  .rec-row:hover{ background:rgba(255,255,255,0.02); }
+  .rec-art{ width:38px; height:38px; border-radius:50%; flex-shrink:0; position:relative; background:#1B1109; box-shadow:0 0 0 1px rgba(0,0,0,0.3) inset; }
+  .rec-art .label{ position:absolute; top:23%; left:23%; width:54%; height:54%; border-radius:50%; }
+  .rec-art .hole{ position:absolute; top:50%; left:50%; width:8%; height:8%; margin:-4% 0 0 -4%; border-radius:50%; background:#0B0704; }
+  .rec-title{ font-size:12.5px; color:var(--cream); margin:0 0 2px; }
+  .rec-artist{ font-family:var(--mono); font-size:10.5px; color:var(--taupe-dim); }
+  .rec-chevron{ margin-left:auto; color:var(--taupe-dim); flex-shrink:0; }
+  .empty{ text-align:center; color:var(--taupe-dim); font-size:12.5px; padding:40px 0; }
+
+  .detail{ display:none; padding:0 20px; }
+  .detail.show{ display:block; animation:detailIn .45s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes detailIn{ from{ opacity:0; transform:translateY(10px) scale(.98);} to{ opacity:1; transform:translateY(0) scale(1);} }
+  @keyframes spinDisc{ to{ transform:rotate(360deg); } }
+  .detail-close{
+    display:flex; align-items:center; gap:8px; background:transparent; border:none; color:var(--taupe);
+    font-family:var(--mono); font-size:11px; padding:0 0 18px; cursor:pointer;
+  }
+  .detail-art{
+    width:78%; aspect-ratio:1; margin:0 auto 22px; border-radius:50%; position:relative;
+    background:repeating-radial-gradient(circle at 50% 50%, #1c130c 0 3px, #211708 3px 6px);
+    box-shadow:inset 0 0 26px rgba(0,0,0,0.55), 0 18px 36px -18px rgba(0,0,0,0.6);
+    animation:spinDisc 9s linear infinite;
+  }
+  .detail-art .label{ position:absolute; top:29%; left:29%; width:42%; height:42%; border-radius:50%; box-shadow:0 0 0 2px rgba(0,0,0,0.35) inset; }
+  .detail-art .hole{ position:absolute; top:50%; left:50%; width:5%; height:5%; margin:-2.5% 0 0 -2.5%; border-radius:50%; background:#0B0704; }
+  .detail-title{ font-family:'Fraunces',serif; font-style:italic; font-size:22px; color:var(--cream); margin:0 0 4px; }
+  .detail-artist{ font-family:var(--mono); font-size:12px; color:var(--taupe); margin:0 0 8px; }
+  .detail-genre{
+    display:inline-block; font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;
+    padding:5px 11px; border-radius:100px; margin-bottom:26px;
+  }
+  .rec-label{ font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--taupe-dim); margin:0 0 12px; }
+  .rec-suggest{
+    display:flex; align-items:center; gap:12px; cursor:pointer;
+    background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 45%), var(--surface-1);
+    border:0.5px solid var(--border); border-radius:14px; padding:13px 15px;
+  }
+  .rec-suggest .rec-art{ width:44px; height:44px; }
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="phone">
+  <div class="status-bar"><span>9:41</span><span>JAZA</span></div>
+  <div class="head">
+    <a class="back-btn" href="jaza-ana-sayfa.html" onclick="if(history.length>1){history.back();return false;}" aria-label="Ana sayfaya dön">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cream)" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div>
+      <p class="head-title">Plak Kütüphanesi</p>
+      <p class="head-sub" id="countLabel">21 kayıt</p>
+    </div>
+  </div>
+
+  <div class="content" id="listContent">
+    <div class="feature-card" id="featureCard" onclick="openDetail(featuredId)">
+      <div class="mascot" id="mascotArt"></div>
+      <div>
+        <p class="feature-label">Sait'in size bir önerisi var</p>
+        <p class="feature-title" id="featureTitle"></p>
+        <p class="feature-artist" id="featureArtist"></p>
+        <p class="feature-note">"Bu akşamki ışığa tam uyuyor."</p>
+      </div>
+    </div>
+    <div class="mascot-picker" onclick="event.stopPropagation()">
+      <span>Maskot dene:</span>
+      <button onclick="setMascot('vinyl',this)" class="active">1</button>
+      <button onclick="setMascot('owl',this)">2</button>
+      <button onclick="setMascot('cane',this)">3</button>
+    </div>
+    <input class="search" id="searchInput" placeholder="Albüm veya sanatçı ara" oninput="renderList()">
+    <div class="seg">
+      <button class="active" onclick="setMode('genre',this)">Tür</button>
+      <button onclick="setMode('az',this)">A–Z</button>
+    </div>
+    <div id="listBody"></div>
+  </div>
+
+  <div class="detail" id="detailView">
+    <button class="detail-close" onclick="closeDetail()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Kütüphaneye dön
+    </button>
+    <div class="detail-art" id="detailArt"></div>
+    <p class="detail-title" id="detailTitle"></p>
+    <p class="detail-artist" id="detailArtist"></p>
+    <span class="detail-genre" id="detailGenre"></span>
+    <p class="rec-label">Bunu sevdiyseniz</p>
+    <div class="rec-suggest" id="detailSuggest"></div>
+  </div>
+</div>
+</div>
+
+<script>
+  var genres = {
+    'Jazz':      { c1:'#5C87B8', c2:'#1F3350' },
+    'Soul':      { c1:'#C46A75', c2:'#3A1418' },
+    'Blues':     { c1:'#5FA0B0', c2:'#173238' },
+    'Funk':      { c1:'#E0925C', c2:'#4A2416' },
+    'Klasik':    { c1:'#D9BB6B', c2:'#4A3607' },
+    'Elektronik':{ c1:'#A184C9', c2:'#2E1A42' },
+    'Rock':      { c1:'#7FBE9A', c2:'#183B30' }
+  };
+
+  var records = [
+    { title:'Kind of Blue', artist:'Miles Davis', genre:'Jazz' },
+    { title:'A Love Supreme', artist:'John Coltrane', genre:'Jazz' },
+    { title:'Time Out', artist:'Dave Brubeck', genre:'Jazz' },
+    { title:"What's Going On", artist:'Marvin Gaye', genre:'Soul' },
+    { title:'I Never Loved a Man', artist:'Aretha Franklin', genre:'Soul' },
+    { title:'Innervisions', artist:'Stevie Wonder', genre:'Soul' },
+    { title:'The Sky Is Crying', artist:'Stevie Ray Vaughan', genre:'Blues' },
+    { title:'King of the Delta Blues', artist:'Robert Johnson', genre:'Blues' },
+    { title:'Live at the Regal', artist:'B.B. King', genre:'Blues' },
+    { title:'Maggot Brain', artist:'Funkadelic', genre:'Funk' },
+    { title:'The Payback', artist:'James Brown', genre:'Funk' },
+    { title:'Mothership Connection', artist:'Parliament', genre:'Funk' },
+    { title:'Goldberg Variations', artist:'Glenn Gould', genre:'Klasik' },
+    { title:'The Four Seasons', artist:'Vivaldi', genre:'Klasik' },
+    { title:'Symphony No. 9', artist:'Beethoven', genre:'Klasik' },
+    { title:'Selected Ambient Works', artist:'Aphex Twin', genre:'Elektronik' },
+    { title:'Discovery', artist:'Daft Punk', genre:'Elektronik' },
+    { title:'Music Has the Right to Children', artist:'Boards of Canada', genre:'Elektronik' },
+    { title:'Abbey Road', artist:'The Beatles', genre:'Rock' },
+    { title:'Rumours', artist:'Fleetwood Mac', genre:'Rock' },
+    { title:'The Dark Side of the Moon', artist:'Pink Floyd', genre:'Rock' }
+  ];
+  records.forEach(function(r,i){ r.id = i; });
+
+  var featuredId = 20; // The Dark Side of the Moon — nods to the poster in the real space
+  var currentMascotStyle = 'vinyl';
+
+  function mascotVinyl(genre){
+    var g = genres[genre];
+    return '<svg viewBox="0 0 48 48" width="48" height="48">' +
+      '<defs><radialGradient id="mG1" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="' + g.c1 + '"/><stop offset="100%" stop-color="' + g.c2 + '"/></radialGradient></defs>' +
+      '<circle cx="24" cy="24" r="23" fill="#1B1109"/>' +
+      '<circle cx="24" cy="24" r="19" fill="none" stroke="rgba(243,233,220,0.07)" stroke-width="0.6"/>' +
+      '<circle cx="24" cy="24" r="15" fill="none" stroke="rgba(243,233,220,0.07)" stroke-width="0.6"/>' +
+      '<circle cx="24" cy="24" r="10.5" fill="url(#mG1)"/>' +
+      '<path d="M16.5 22.6a3.8 3.8 0 017.6 0M23.9 22.6a3.8 3.8 0 017.6 0" fill="none" stroke="#F3E9DC" stroke-width="1" opacity="0.85"/>' +
+      '<circle cx="20.3" cy="23.4" r="1.3" fill="#F3E9DC"/>' +
+      '<circle cx="27.7" cy="23.4" r="1.3" fill="#F3E9DC"/>' +
+      '<path d="M19.6 27.2 Q24 29.6 28.4 27.2" fill="none" stroke="#F3E9DC" stroke-width="1.1" stroke-linecap="round"/>' +
+    '</svg>';
+  }
+
+  function mascotOwl(genre){
+    var g = genres[genre];
+    return '<svg viewBox="0 0 48 48" width="48" height="48">' +
+      '<defs><radialGradient id="mG2" cx="35%" cy="30%" r="80%"><stop offset="0%" stop-color="' + g.c1 + '"/><stop offset="100%" stop-color="' + g.c2 + '"/></radialGradient></defs>' +
+      '<path d="M13 15 L18 22 M35 15 L30 22" stroke="#D88A54" stroke-width="2" stroke-linecap="round"/>' +
+      '<ellipse cx="24" cy="27" rx="15" ry="14" fill="#2B1B12" stroke="rgba(243,233,220,0.12)" stroke-width="0.6"/>' +
+      '<circle cx="17.5" cy="25" r="6.4" fill="url(#mG2)"/>' +
+      '<circle cx="30.5" cy="25" r="6.4" fill="url(#mG2)"/>' +
+      '<circle cx="17.5" cy="25" r="2" fill="#1B1109"/>' +
+      '<circle cx="30.5" cy="25" r="2" fill="#1B1109"/>' +
+      '<path d="M22.5 29.5 L24 32.5 L25.5 29.5Z" fill="#D88A54"/>' +
+    '</svg>';
+  }
+
+  function mascotCane(genre){
+    var g = genres[genre];
+    return '<svg viewBox="0 0 48 48" width="48" height="48">' +
+      '<defs><radialGradient id="mG3" cx="35%" cy="30%" r="80%"><stop offset="0%" stop-color="' + g.c1 + '"/><stop offset="100%" stop-color="' + g.c2 + '"/></radialGradient></defs>' +
+      '<circle cx="24" cy="18" r="10" fill="url(#mG3)"/>' +
+      '<path d="M16 13 Q24 6 32 13" fill="none" stroke="#E8B084" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<circle cx="20.6" cy="18.2" r="1.3" fill="#25120C"/>' +
+      '<circle cx="27.4" cy="18.2" r="1.3" fill="#25120C"/>' +
+      '<path d="M20.5 21.6 Q24 23.6 27.5 21.6" fill="none" stroke="#25120C" stroke-width="1.1" stroke-linecap="round" opacity="0.75"/>' +
+      '<path d="M24 28 L24 40 M24 40 Q28 40 28 36" fill="none" stroke="#8A7A69" stroke-width="1.6" stroke-linecap="round"/>' +
+    '</svg>';
+  }
+
+  var mascotStyles = { vinyl:mascotVinyl, owl:mascotOwl, cane:mascotCane };
+
+  function setMascot(style, el){
+    currentMascotStyle = style;
+    document.querySelectorAll('.mascot-picker button').forEach(function(b){ b.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('mascotArt').innerHTML = mascotStyles[style](records[featuredId].genre);
+  }
+
+  var mode = 'genre';
+  document.getElementById('countLabel').textContent = records.length + ' kayıt';
+
+  function setMode(m, el){
+    mode = m;
+    document.querySelectorAll('.seg button').forEach(function(b){ b.classList.remove('active'); });
+    el.classList.add('active');
+    renderList();
+  }
+
+  function labelStyle(genre){
+    var g = genres[genre];
+    return 'background:radial-gradient(circle at 35% 30%,' + g.c1 + ',' + g.c2 + ' 80%)';
+  }
+  function vinylHTML(genre, extraClass){
+    return '<div class="rec-art' + (extraClass?(' '+extraClass):'') + '"><div class="label" style="' + labelStyle(genre) + '"></div><div class="hole"></div></div>';
+  }
+
+  function renderList(){
+    var q = document.getElementById('searchInput').value.trim().toLowerCase();
+    var filtered = records.filter(function(r){
+      return !q || r.title.toLowerCase().indexOf(q) > -1 || r.artist.toLowerCase().indexOf(q) > -1;
+    });
+    var body = document.getElementById('listBody');
+    if (filtered.length === 0){
+      body.innerHTML = '<p class="empty">Sonuç bulunamadı.</p>';
+      return;
+    }
+    var groups = {};
+    var order = [];
+    if (mode === 'genre'){
+      Object.keys(genres).forEach(function(g){ groups[g] = []; order.push(g); });
+      filtered.forEach(function(r){ groups[r.genre].push(r); });
+    } else {
+      filtered.slice().sort(function(a,b){ return a.title.localeCompare(b.title,'tr'); }).forEach(function(r){
+        var letter = r.title[0].toUpperCase();
+        if (!groups[letter]){ groups[letter] = []; order.push(letter); }
+        groups[letter].push(r);
+      });
+      order.sort();
+    }
+    var html = '';
+    order.forEach(function(key){
+      if (!groups[key] || groups[key].length === 0) return;
+      var dotColor = mode === 'genre' ? genres[key].c1 : 'var(--copper-400)';
+      html += '<div class="group-head"><span class="dot" style="background:' + dotColor + '"></span><span>' + key + '</span></div>';
+      groups[key].forEach(function(r){
+        html += '<div class="rec-row" onclick="openDetail(' + r.id + ')">' +
+          vinylHTML(r.genre) +
+          '<div><p class="rec-title">' + r.title + '</p><p class="rec-artist">' + r.artist + '</p></div>' +
+          '<span class="rec-chevron"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></span>' +
+        '</div>';
+      });
+    });
+    body.innerHTML = html;
+  }
+
+  function recommendationFor(r){
+    var same = records.filter(function(x){ return x.genre === r.genre && x.id !== r.id; });
+    return same[0] || records[(r.id + 1) % records.length];
+  }
+
+  function openDetail(id){
+    var r = records[id];
+    var rec = recommendationFor(r);
+    document.getElementById('listContent').style.display = 'none';
+    var dv = document.getElementById('detailView');
+    dv.classList.remove('show'); void dv.offsetWidth; dv.classList.add('show');
+
+    document.getElementById('detailArt').innerHTML =
+      '<div class="label" style="' + labelStyle(r.genre) + '"></div><div class="hole"></div>';
+    document.getElementById('detailTitle').textContent = r.title;
+    document.getElementById('detailArtist').textContent = r.artist;
+    var genreEl = document.getElementById('detailGenre');
+    genreEl.textContent = r.genre;
+    genreEl.style.background = 'rgba(255,255,255,0.08)';
+    genreEl.style.color = genres[r.genre].c1;
+
+    var s = document.getElementById('detailSuggest');
+    s.onclick = function(){ openDetail(rec.id); };
+    s.innerHTML =
+      vinylHTML(rec.genre) +
+      '<div><p class="rec-title">' + rec.title + '</p><p class="rec-artist">' + rec.artist + ' · ' + rec.genre + '</p></div>' +
+      '<span class="rec-chevron" style="margin-left:auto;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></span>';
+  }
+
+  function closeDetail(){
+    document.getElementById('detailView').classList.remove('show');
+    document.getElementById('listContent').style.display = 'block';
+  }
+
+  (function(){
+    var f = records[featuredId];
+    document.getElementById('mascotArt').innerHTML = mascotStyles[currentMascotStyle](f.genre);
+    document.getElementById('featureTitle').textContent = f.title;
+    document.getElementById('featureArtist').textContent = f.artist + ' · ' + f.genre;
+  })();
+
+  renderList();
+</script>
+</body>
+</html>

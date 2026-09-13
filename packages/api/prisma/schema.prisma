@@ -1,0 +1,297 @@
+// Jaza — draft database schema.
+// Covers the full information architecture from CLAUDE.md; MVP phases (see
+// docs/ARCHITECTURE.md) build against this incrementally rather than a
+// separate v1 schema, since Postgres/Prisma migrations make growing it safe.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Identity & membership
+// ---------------------------------------------------------------------------
+
+enum Role {
+  MEMBER
+  STAFF
+  ADMIN
+}
+
+enum MembershipTier {
+  BASIC
+  PREMIUM
+}
+
+enum MembershipStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  phone     String?  @unique
+  passwordHash String
+  role      Role     @default(MEMBER)
+
+  // Gerçek isim — payment/admin/contact tarafında her zaman bu görünür.
+  fullName  String
+
+  // Kod adı — yalnızca forum/topluluk içinde görünür. Gerçek isimle karışmasın
+  // diye ayrı alan; admin panelinde de her zaman fullName gösterilir.
+  codeName  String   @unique
+
+  membershipAgreementAcceptedAt DateTime?
+
+  memberships   Membership[]
+  reservations  Reservation[]
+  forumPosts    ForumPost[]
+  forumComments ForumComment[]
+  feedback      Feedback[]
+  eventRsvps    EventRsvp[]
+  donatedRecords LentRecord[]  @relation("Donor")
+  borrowedRecords LentRecord[] @relation("Borrower")
+  nowPlayingEntries NowPlaying[] @relation("SetByAdmin")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// A member's membership can be renewed/changed tier over time — kept as a
+// history table rather than fields on User so past tiers stay auditable.
+model Membership {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id])
+  tier      MembershipTier
+  status    MembershipStatus @default(ACTIVE)
+  startsAt  DateTime         @default(now())
+  endsAt    DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Reservations & check-in
+// ---------------------------------------------------------------------------
+
+enum ReservationType {
+  DEMO_ROOM
+  CAFE
+  HIFI_CONSULT
+}
+
+enum ReservationStatus {
+  CONFIRMED
+  CHECKED_IN
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+model Reservation {
+  id            String            @id @default(cuid())
+  type          ReservationType
+  status        ReservationStatus @default(CONFIRMED)
+
+  memberId      String
+  member        User              @relation(fields: [memberId], references: [id])
+
+  // Demo Odası & Hi-Fi danışmanlık: ileri tarihli, takvimli.
+  // Cafe: anlık check-in, startAt == createdAt, endAt null'dan sonra check-out ile doldurulur.
+  startAt       DateTime
+  endAt         DateTime?
+
+  // Benzersiz referans kodu — QR içine kodlanır, e-postayla ve
+  // "Rezervasyonlarım" ekranında tekrar gösterilir.
+  referenceCode String            @unique
+
+  guests        Guest[]
+  checkIns      CheckIn[]
+
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([memberId])
+  @@index([type, startAt])
+}
+
+// Demo Odası: üye + en fazla 3 misafir. Cafe: üye + en fazla 5 misafir.
+// Guest limits are enforced in application code (packages/api), not the schema.
+model Guest {
+  id            String      @id @default(cuid())
+  reservationId String
+  reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  name          String
+  email         String
+}
+
+enum CheckInDirection {
+  IN
+  OUT
+}
+
+// One row per QR scan at the door — drives live occupancy counts and gives
+// an audit trail independent of the reservation's own status field.
+model CheckIn {
+  id            String           @id @default(cuid())
+  reservationId String
+  reservation   Reservation      @relation(fields: [reservationId], references: [id])
+  direction     CheckInDirection
+  scannedAt     DateTime         @default(now())
+  scannedByStaffId String?
+
+  @@index([reservationId])
+}
+
+// ---------------------------------------------------------------------------
+// Live venue state
+// ---------------------------------------------------------------------------
+
+enum VenueLocation {
+  CAFE
+  DEMO_ROOM
+}
+
+// "Şu an çalıyor" — admin panelinden manuel girilir; albüm kapağından
+// çıkarılan dominant renk (accentColor) kartın temasını değiştirir.
+model NowPlaying {
+  id           String        @id @default(cuid())
+  location     VenueLocation
+  trackTitle   String
+  artist       String
+  albumArtUrl  String
+  accentColor  String
+  setByAdminId String?
+  setByAdmin   User?         @relation("SetByAdmin", fields: [setByAdminId], references: [id])
+  setAt        DateTime      @default(now())
+
+  @@index([location, setAt])
+}
+
+// ---------------------------------------------------------------------------
+// Content: forum, records, events, feedback
+// ---------------------------------------------------------------------------
+
+enum ForumCategory {
+  MUSIC
+  FILM
+  CULTURE
+  RECOMMENDATION
+}
+
+model ForumPost {
+  id        String        @id @default(cuid())
+  authorId  String
+  author    User          @relation(fields: [authorId], references: [id])
+  category  ForumCategory
+  body      String
+  isHidden  Boolean       @default(false) // moderation
+  comments  ForumComment[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([authorId])
+}
+
+model ForumComment {
+  id        String    @id @default(cuid())
+  postId    String
+  post      ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [id])
+  body      String
+  isHidden  Boolean   @default(false)
+  createdAt DateTime  @default(now())
+}
+
+model Record {
+  id        String @id @default(cuid())
+  title     String
+  artist    String
+  genre     String
+  coverUrl  String
+
+  lentCopies LentRecord[]
+
+  createdAt DateTime @default(now())
+
+  @@index([genre])
+}
+
+enum LentRecordStatus {
+  AVAILABLE
+  BORROWED
+}
+
+// "Askıda plak" — bir üyenin fiziksel bir kopyayı bağışlayıp başka bir üyenin
+// dinleyebilmesi. One row per physical donated copy, not per catalog Record.
+model LentRecord {
+  id          String           @id @default(cuid())
+  recordId    String
+  record      Record           @relation(fields: [recordId], references: [id])
+  donorId     String
+  donor       User             @relation("Donor", fields: [donorId], references: [id])
+  status      LentRecordStatus @default(AVAILABLE)
+  borrowerId  String?
+  borrower    User?            @relation("Borrower", fields: [borrowerId], references: [id])
+  borrowedAt  DateTime?
+  returnedAt  DateTime?
+
+  createdAt   DateTime         @default(now())
+}
+
+enum EventType {
+  WORKSHOP
+  CONCERT
+  TALK
+  EXHIBITION
+}
+
+model Event {
+  id           String      @id @default(cuid())
+  title        String
+  description  String
+  type         EventType
+  startAt      DateTime
+  endAt        DateTime
+  capacity     Int?
+  coverImageUrl String?
+
+  rsvps        EventRsvp[]
+
+  createdAt    DateTime    @default(now())
+}
+
+enum EventRsvpStatus {
+  GOING
+  CANCELLED
+}
+
+model EventRsvp {
+  id        String          @id @default(cuid())
+  eventId   String
+  event     Event           @relation(fields: [eventId], references: [id])
+  userId    String
+  user      User            @relation(fields: [userId], references: [id])
+  status    EventRsvpStatus @default(GOING)
+  createdAt DateTime        @default(now())
+
+  @@unique([eventId, userId])
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  message   String
+  createdAt DateTime @default(now())
+}

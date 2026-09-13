@@ -1,0 +1,15 @@
+{
+  "name": "jazacafe",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Jaza — Culture, Music & Cafe: member app + admin panel",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev:mobile": "pnpm --filter @jaza/mobile dev",
+    "dev:admin": "pnpm --filter @jaza/admin dev",
+    "dev:api": "pnpm --filter @jaza/api dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  }
+}

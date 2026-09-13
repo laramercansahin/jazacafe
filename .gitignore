@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.local
+*.tsbuildinfo
+.DS_Store
+
+# Prisma
+packages/api/prisma/migrations/dev.db
+
+# pnpm
+.pnpm-store/

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Jaza — Tasarım Dosyaları</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#25120C; --surface-1:#331C13;
+    --border:rgba(232,201,163,0.13); --border-strong:rgba(232,201,163,0.26);
+    --copper-400:#D88A54; --copper-500:#C97B4A; --amber-glow:#E8A868;
+    --cream:#F3E9DC; --taupe:#B7A491; --taupe-dim:#93816E; --mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--bg); color:var(--cream); font-family:'Inter',sans-serif; padding:64px 24px 100px; }
+  .wrap{ max-width:720px; margin:0 auto; }
+  .eyebrow{ font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe-dim); margin:0 0 8px; }
+  h1{ font-family:'Fraunces',serif; font-style:italic; font-weight:400; font-size:40px; color:var(--copper-400); margin:0 0 8px; }
+  .sub{ font-size:14px; color:var(--taupe); margin:0 0 48px; }
+  .list{ display:flex; flex-direction:column; gap:12px; }
+  a.card{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 45%), var(--surface-1);
+    border:0.5px solid var(--border); border-radius:14px; padding:18px 20px;
+    text-decoration:none; color:inherit; transition:border-color .2s ease;
+  }
+  a.card:hover{ border-color:var(--border-strong); }
+  .card-title{ font-family:'Fraunces',serif; font-size:17px; color:var(--cream); margin:0 0 4px; }
+  .card-sub{ font-family:var(--mono); font-size:11px; color:var(--taupe-dim); }
+  .arrow{ color:var(--amber-glow); font-size:18px; flex-shrink:0; }
+  footer{ margin-top:56px; font-family:var(--mono); font-size:11px; color:var(--taupe-dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Design handoff</p>
+  <h1>Jaza</h1>
+  <p class="sub">Üye uygulaması — tasarım sistemi ve ekran mockup'ları</p>
+
+  <div class="list">
+    <a class="card" href="jaza-design-system.html">
+      <div>
+        <p class="card-title">Design system</p>
+        <p class="card-sub">Renk paleti · tipografi · bileşenler</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="card" href="jaza-ana-sayfa.html">
+      <div>
+        <p class="card-title">Ana sayfa</p>
+        <p class="card-sub">Canlı doluluk · şu an çalıyor · hızlı erişim</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="card" href="jaza-demo-odasi-rezervasyon.html">
+      <div>
+        <p class="card-title">Demo Odası — rezervasyon</p>
+        <p class="card-sub">Takvim · saat seçimi · misafir bilgileri · QR</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="card" href="jaza-kafe-rezervasyon.html">
+      <div>
+        <p class="card-title">Jaza Cafe — anlık giriş</p>
+        <p class="card-sub">Canlı doluluk · QR ile giriş</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="card" href="jaza-plak-kutuphanesi.html">
+      <div>
+        <p class="card-title">Plak Kütüphanesi</p>
+        <p class="card-sub">Tür / A–Z · arama · Sait'in önerisi</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <footer>Son güncelleme: bu dosyalar geliştikçe burada yeni ekranlar eklenecek.</footer>
+</div>
+</body>
+</html>

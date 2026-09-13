@@ -1,0 +1,33 @@
+:root {
+  --bg: #25120c;
+  --surface-1: #331c13;
+  --surface-2: #3e2417;
+  --border: rgba(232, 201, 163, 0.13);
+  --border-strong: rgba(232, 201, 163, 0.26);
+  --copper-500: #c97b4a;
+  --amber-glow: #e8a868;
+  --cream: #f3e9dc;
+  --taupe: #b7a491;
+  --taupe-dim: #93816e;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--cream);
+  font-family: "Inter", -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
