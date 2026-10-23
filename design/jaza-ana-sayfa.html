@@ -36,7 +36,8 @@
   @keyframes drift2{ to{ transform:translate(40px,-30px) scale(1.08);} }
 
   /* --- fixed header --- */
-  .hd{ position:absolute; z-index:6; top:0; left:0; right:0; height:112px; padding:16px 24px 0; background:linear-gradient(180deg, var(--bg) 66%, rgba(37,18,12,.85) 80%, rgba(37,18,12,0)); pointer-events:none; }
+  .hd{ position:absolute; z-index:6; top:0; left:0; right:0; height:112px; padding:16px 24px 0; background:var(--bg); transition:transform .35s var(--ease); pointer-events:none; }
+  .hd.hd-hidden{ transform:translateY(-100%); }
   .hd > *{ pointer-events:auto; }
   .time{ font-size:10px; letter-spacing:.18em; color:var(--mid); }
   .bar{ position:relative; height:60px; display:flex; align-items:center; justify-content:space-between; }
@@ -290,7 +291,7 @@
 <div class="phone" id="phone">
   <div class="atmos"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 
-  <div class="hd">
+  <div class="hd" id="hd">
     <div class="time">9:41</div>
     <div class="bar">
       <button class="menu" aria-label="Menü"><i></i><i></i></button>
@@ -454,6 +455,8 @@
   // scroll-linked motion: record drifts and cover slides, atmosphere shifts
   var disc = document.getElementById('disc'), cover = document.getElementById('cover'), stage = document.getElementById('stage');
   var blobs = document.querySelectorAll('.blob'), ticking = false;
+  // header: hides on scroll down, reappears on scroll up (always shown near the top)
+  var hd = document.getElementById('hd'), lastY = 0, hdHidden = false;
   function onScroll(){
     var y = sc.scrollTop;
     cover.style.transform = 'translate3d(' + (-y * .10).toFixed(1) + 'px,' + (y * .16).toFixed(1) + 'px,0)';
@@ -462,6 +465,15 @@
     blobs[0].style.translate = '0 ' + (-y * .18).toFixed(1) + 'px';
     blobs[1].style.translate = '0 ' + (-y * .28).toFixed(1) + 'px';
     blobs[2].style.translate = '0 ' + (-y * .10).toFixed(1) + 'px';
+    var dy = y - lastY;
+    if (y < 40){
+      if (hdHidden){ hd.classList.remove('hd-hidden'); hdHidden = false; }
+    } else if (dy > 4 && !hdHidden){
+      hd.classList.add('hd-hidden'); hdHidden = true;
+    } else if (dy < -4 && hdHidden){
+      hd.classList.remove('hd-hidden'); hdHidden = false;
+    }
+    lastY = y;
     ticking = false;
   }
   sc.addEventListener('scroll', function(){ if (!ticking){ requestAnimationFrame(onScroll); ticking = true; } }, { passive:true });
