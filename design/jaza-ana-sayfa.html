@@ -40,11 +40,8 @@
   .hd.hd-hidden{ transform:translateY(-100%); }
   .hd > *{ pointer-events:auto; }
   .time{ font-size:10px; letter-spacing:.18em; color:var(--mid); }
-  .bar{ position:relative; height:46px; display:flex; align-items:center; justify-content:space-between; }
+  .bar{ position:relative; height:46px; display:flex; align-items:center; justify-content:flex-end; }
   .logo{ position:absolute; left:50%; top:50%; width:118px; aspect-ratio:700/350; background:var(--logo) center/contain no-repeat; transform:translate(-50%,-48%); transition:transform .6s var(--ease), opacity .6s; }
-  .menu{ width:22px; height:14px; position:relative; border:0; background:none; padding:0; }
-  .menu i{ position:absolute; left:0; height:1px; background:var(--cream); opacity:.85; }
-  .menu i:nth-child(1){ top:3px; width:22px; } .menu i:nth-child(2){ top:10px; width:14px; }
   .hd-ic{ width:22px; height:22px; fill:none; stroke:var(--cream); stroke-width:1.1; opacity:.85; }
 
   /* --- scroll --- */
@@ -294,7 +291,6 @@
   <div class="hd" id="hd">
     <div class="time">9:41</div>
     <div class="bar">
-      <button class="menu" aria-label="Menü"><i></i><i></i></button>
       <div class="logo" role="img" aria-label="Jaza"></div>
       <a class="profile-l" href="jaza-uyelik.html" aria-label="Profilim"><svg class="hd-ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/></svg></a>
     </div>
