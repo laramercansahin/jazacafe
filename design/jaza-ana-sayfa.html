@@ -171,7 +171,11 @@
 
   /* pick */
   .pick{ margin-top:64px; }
-  .quote{ margin:14px 0 14px; font-weight:200; font-style:italic; font-size:30px; line-height:1.15; letter-spacing:.015em; }
+  .pick-card{ display:block; padding:22px 20px; border:1px solid var(--hair); border-radius:18px; background:linear-gradient(135deg, rgba(232,168,104,.1), transparent 60%), linear-gradient(160deg, rgba(255,255,255,.035), rgba(255,255,255,.01) 55%); transition:border-color .4s var(--ease), transform .5s var(--ease); }
+  .pick-card:hover{ border-color:rgba(232,168,104,.5); transform:translateY(-2px); }
+  .pick-top{ display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+  .pick-top svg{ width:18px; height:18px; color:var(--amber); flex:none; animation:spin 10s linear infinite; }
+  .quote{ margin:0 0 14px; font-weight:200; font-style:italic; font-size:30px; line-height:1.15; letter-spacing:.015em; }
   .quote em{ color:var(--amber); }
   .sig{ display:flex; align-items:center; gap:12px; font-size:12px; letter-spacing:.07em; color:var(--mid); }
   .sig i{ width:28px; height:1px; background:var(--ghost); }
@@ -395,18 +399,23 @@
     </section>
 
     <section class="pick pad">
-      <div class="micro rv">Sait'in önerisi</div>
-      <p class="quote rv" style="--i:1">Bu hafta gece,<br>sakin bir <em>Bill Evans</em>.</p>
-      <div class="sign rv" style="--i:2">
-        <svg viewBox="0 0 140 54" fill="none" stroke="#E8A868" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Sait">
-          <g transform="skewX(-12) translate(10 0)">
-          <path pathLength="100" class="s1" d="M30 14C20 4 6 12 14 21C24 30 20 44 6 38"/>
-          <path pathLength="100" class="s2" d="M42 32C33 29 31 42 39 41C46 40 48 33 48 29C47 37 49 41 55 39M61 31L61 39M61 25L61 25.5M70 15L68 39C68 43 75 41 77 37M62 27L82 25"/>
-          <path pathLength="100" class="s3" d="M4 48C40 42 96 46 128 36"/>
-          </g>
-        </svg>
-        <span class="micro" style="color:var(--mid)">Sait · Jaza'nın kurucusu</span>
-      </div>
+      <a class="pick-card rv" style="--i:0" href="jaza-plak-kutuphanesi.html">
+        <div class="pick-top">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/><circle cx="12" cy="12" r="4.2" fill="currentColor" opacity=".9"/><circle cx="12" cy="12" r="1.1" fill="var(--bg)"/></svg>
+          <span class="micro">Sait'in önerisi</span>
+        </div>
+        <p class="quote">Bu hafta gece,<br>sakin bir <em>Bill Evans</em>.</p>
+        <div class="sign rv" style="--i:2">
+          <svg viewBox="0 0 140 54" fill="none" stroke="#E8A868" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Sait">
+            <g transform="skewX(-12) translate(10 0)">
+            <path pathLength="100" class="s1" d="M30 14C20 4 6 12 14 21C24 30 20 44 6 38"/>
+            <path pathLength="100" class="s2" d="M42 32C33 29 31 42 39 41C46 40 48 33 48 29C47 37 49 41 55 39M61 31L61 39M61 25L61 25.5M70 15L68 39C68 43 75 41 77 37M62 27L82 25"/>
+            <path pathLength="100" class="s3" d="M4 48C40 42 96 46 128 36"/>
+            </g>
+          </svg>
+          <span class="micro" style="color:var(--mid)">Sait · Jaza'nın kurucusu</span>
+        </div>
+      </a>
     </section>
 
     <section class="up pad">
@@ -580,7 +589,7 @@
   });
 
   // page transition (curtain) for real pages
-  document.querySelectorAll('a.tile, a.qrb, a.profile-l, a.tab, a.night-link, a.night-cta, a.venue').forEach(function(a){
+  document.querySelectorAll('a.tile, a.qrb, a.profile-l, a.tab, a.night-link, a.night-cta, a.venue, a.pick-card').forEach(function(a){
     a.addEventListener('click', function(e){
       var href = a.getAttribute('href');
       if (!href || href === '#'){ e.preventDefault(); return; }
