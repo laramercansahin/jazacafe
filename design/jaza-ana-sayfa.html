@@ -232,12 +232,17 @@
 
   /* --- upcoming night + countdown --- */
   .night{ margin-top:64px; }
-  .night h3{ margin:12px 0 6px; font-weight:200; font-style:italic; font-size:30px; letter-spacing:.015em; }
+  .night h3{ margin:12px 0 6px; display:inline-block; font-weight:200; font-style:italic; font-size:30px; letter-spacing:.015em; transition:color .3s; }
+  .night a:hover h3{ color:var(--amber); }
   .night .nd{ margin:0 0 18px; font-size:12px; letter-spacing:.07em; color:var(--mid); }
   .cd{ display:flex; align-items:flex-start; gap:8px; padding:16px 0 0; border-top:1px solid var(--hair); }
   .cd div{ display:flex; flex-direction:column; gap:7px; min-width:52px; }
   .cd b{ font-weight:200; font-size:40px; line-height:1; letter-spacing:.01em; font-variant-numeric:tabular-nums; }
   .cd i{ font-style:normal; font-weight:200; font-size:26px; line-height:1.15; color:var(--ghost); }
+  .night-cta{ display:inline-flex; align-items:center; gap:8px; margin-top:20px; text-decoration:none; }
+  .night-cta span{ font-size:10px; font-weight:400; letter-spacing:.2em; text-transform:uppercase; color:var(--amber); }
+  .night-cta svg{ width:13px; height:13px; fill:none; stroke:var(--amber); stroke-width:1.6; transition:transform .3s var(--ease); }
+  .night-cta:hover svg{ transform:translateX(3px); }
 
   /* --- demo room spec ticker --- */
   .spec{ position:absolute; z-index:1; top:17px; right:14px; height:12px; width:150px; text-align:right; }
@@ -362,7 +367,7 @@
 
     <section class="pad night">
       <div class="micro rv">Yaklaşan etkinlik</div>
-      <h3 class="rv" style="--i:1">Dinleme Gecesi</h3>
+      <a class="night-link rv" style="--i:1" href="jaza-etkinlikler.html"><h3>Dinleme Gecesi</h3></a>
       <p class="nd rv" style="--i:2">Cuma · 21:00 · Demo Odası</p>
       <div class="cd rv" style="--i:3" id="cd">
         <div><b id="cdD">00</b><span class="micro">gün</span></div><i>:</i>
@@ -370,6 +375,10 @@
         <div><b id="cdM">00</b><span class="micro">dk</span></div><i>:</i>
         <div><b id="cdS">00</b><span class="micro">sn</span></div>
       </div>
+      <a class="night-cta rv" style="--i:4" href="jaza-etkinlikler.html">
+        <span>Detayları gör ve kayıt ol</span>
+        <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
     </section>
 
     <section class="idx pad">
@@ -544,7 +553,7 @@
   });
 
   // page transition (curtain) for real pages
-  document.querySelectorAll('a.tile, a.qrb, a.qr-l, a.tab').forEach(function(a){
+  document.querySelectorAll('a.tile, a.qrb, a.qr-l, a.tab, a.night-link, a.night-cta').forEach(function(a){
     a.addEventListener('click', function(e){
       var href = a.getAttribute('href');
       if (!href || href === '#'){ e.preventDefault(); return; }
