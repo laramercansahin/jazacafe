@@ -101,7 +101,8 @@
   /* live venue status — two separate cards so Cafe and Demo Odası never blur together */
   .sec{ margin-top:56px; }
   .venues{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
-  .venue{ padding:16px 15px; border:1px solid var(--hair); border-radius:16px; background:linear-gradient(160deg, rgba(255,255,255,.035), rgba(255,255,255,.01) 55%); }
+  .venue{ display:block; padding:16px 15px; border:1px solid var(--hair); border-radius:16px; background:linear-gradient(160deg, rgba(255,255,255,.035), rgba(255,255,255,.01) 55%); transition:border-color .4s var(--ease), transform .5s var(--ease); }
+  .venue:hover{ border-color:rgba(232,168,104,.5); transform:translateY(-2px); }
   .venue-top{ display:flex; align-items:center; gap:7px; margin-bottom:14px; }
   .venue-top .dot{ flex:none; }
   .venue-top span.micro{ color:var(--cream); }
@@ -329,17 +330,17 @@
     <section class="sec pad">
       <div class="micro rv"><span style="color:var(--mid)">Şu an Jaza'da</span></div>
       <div class="venues rv" style="--i:1">
-        <div class="venue">
+        <a class="venue" href="jaza-kafe-rezervasyon.html">
           <div class="venue-top"><span class="dot"></span><span class="micro">Jaza Cafe</span></div>
           <div class="num">09<small>/ 14</small></div>
           <div class="dots" id="dots"></div>
           <span class="venue-sub">5 kişilik yer açık</span>
-        </div>
-        <div class="venue">
+        </a>
+        <a class="venue" href="jaza-demo-odasi-rezervasyon.html">
           <div class="venue-top"><span class="dot"></span><span class="micro">Demo Odası</span></div>
           <div class="venue-status full">Dolu</div>
           <span class="venue-sub">20:30'a kadar</span>
-        </div>
+        </a>
       </div>
       <div class="inside rv" style="--i:4">
         <span class="micro">Şimdi içeride</span>
@@ -579,7 +580,7 @@
   });
 
   // page transition (curtain) for real pages
-  document.querySelectorAll('a.tile, a.qrb, a.profile-l, a.tab, a.night-link, a.night-cta').forEach(function(a){
+  document.querySelectorAll('a.tile, a.qrb, a.profile-l, a.tab, a.night-link, a.night-cta, a.venue').forEach(function(a){
     a.addEventListener('click', function(e){
       var href = a.getAttribute('href');
       if (!href || href === '#'){ e.preventDefault(); return; }
