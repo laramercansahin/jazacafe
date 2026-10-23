@@ -189,8 +189,9 @@
 
   /* tab bar */
   .tabs{ position:absolute; z-index:6; left:0; right:0; bottom:0; padding:20px 18px 18px; background:var(--bg); border-top:1px solid var(--hair); display:flex; }
-  .tab{ flex:1; text-align:center; font-size:8px; letter-spacing:.03em; text-transform:uppercase; font-weight:400; color:var(--ghost); position:relative; padding-top:12px; white-space:nowrap; transition:color .4s; }
+  .tab{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; font-size:8px; letter-spacing:.03em; text-transform:uppercase; font-weight:400; color:var(--ghost); position:relative; padding-top:12px; white-space:nowrap; transition:color .4s; }
   .tab::before{ content:''; position:absolute; top:0; left:50%; width:0; height:1px; background:var(--amber); transition:width .6s var(--ease), left .6s var(--ease); }
+  .tab svg{ width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round; transition:stroke .4s; }
   .tab.on{ color:var(--amber); } .tab.on::before{ width:26px; left:calc(50% - 13px); }
 
   /* page curtain */
@@ -425,7 +426,11 @@
   </div>
 
   <nav class="tabs">
-    <a class="tab on" href="jaza-ana-sayfa.html">Ana sayfa</a><a class="tab" href="jaza-demo-odasi-rezervasyon.html">Rezervasyon</a><a class="tab" href="jaza-topluluk.html">Topluluk</a><a class="tab" href="jaza-etkinlikler.html">Etkinlik</a><a class="tab" href="jaza-uyelik.html">Profil</a>
+    <a class="tab on" href="jaza-ana-sayfa.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg><span>Ana sayfa</span></a>
+    <a class="tab" href="jaza-demo-odasi-rezervasyon.html"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="18" rx="1"/><circle cx="7.3" cy="12" r="1"/></svg><span>Rezervasyon</span></a>
+    <a class="tab" href="jaza-topluluk.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H10l-5 4V5z"/></svg><span>Topluluk</span></a>
+    <a class="tab" href="jaza-etkinlikler.html"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4"/></svg><span>Etkinlik</span></a>
+    <a class="tab" href="jaza-uyelik.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-4 3.1-6.4 7-6.4s7 2.4 7 6.4"/></svg><span>Profil</span></a>
   </nav>
   <div class="grain"></div>
   <div class="curtain"></div>
