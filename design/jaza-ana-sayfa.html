@@ -188,7 +188,7 @@
   .foot{ margin-top:70px; text-align:center; font-size:9px; letter-spacing:.22em; color:var(--ghost); text-transform:uppercase; }
 
   /* tab bar */
-  .tabs{ position:absolute; z-index:6; left:0; right:0; bottom:0; padding:30px 18px 18px; background:linear-gradient(0deg, var(--bg) 58%, rgba(37,18,12,0)); display:flex; }
+  .tabs{ position:absolute; z-index:6; left:0; right:0; bottom:0; padding:20px 18px 18px; background:var(--bg); border-top:1px solid var(--hair); display:flex; }
   .tab{ flex:1; text-align:center; font-size:8px; letter-spacing:.03em; text-transform:uppercase; font-weight:400; color:var(--ghost); position:relative; padding-top:12px; white-space:nowrap; transition:color .4s; }
   .tab::before{ content:''; position:absolute; top:0; left:50%; width:0; height:1px; background:var(--amber); transition:width .6s var(--ease), left .6s var(--ease); }
   .tab.on{ color:var(--amber); } .tab.on::before{ width:26px; left:calc(50% - 13px); }
