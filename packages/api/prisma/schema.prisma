@@ -55,8 +55,6 @@ model User {
   forumComments ForumComment[]
   feedback      Feedback[]
   eventRsvps    EventRsvp[]
-  donatedRecords LentRecord[]  @relation("Donor")
-  borrowedRecords LentRecord[] @relation("Borrower")
   nowPlayingEntries NowPlaying[] @relation("SetByAdmin")
 
   createdAt DateTime @default(now())
@@ -220,33 +218,9 @@ model Record {
   genre     String
   coverUrl  String
 
-  lentCopies LentRecord[]
-
   createdAt DateTime @default(now())
 
   @@index([genre])
-}
-
-enum LentRecordStatus {
-  AVAILABLE
-  BORROWED
-}
-
-// "Askıda plak" — bir üyenin fiziksel bir kopyayı bağışlayıp başka bir üyenin
-// dinleyebilmesi. One row per physical donated copy, not per catalog Record.
-model LentRecord {
-  id          String           @id @default(cuid())
-  recordId    String
-  record      Record           @relation(fields: [recordId], references: [id])
-  donorId     String
-  donor       User             @relation("Donor", fields: [donorId], references: [id])
-  status      LentRecordStatus @default(AVAILABLE)
-  borrowerId  String?
-  borrower    User?            @relation("Borrower", fields: [borrowerId], references: [id])
-  borrowedAt  DateTime?
-  returnedAt  DateTime?
-
-  createdAt   DateTime         @default(now())
 }
 
 enum EventType {

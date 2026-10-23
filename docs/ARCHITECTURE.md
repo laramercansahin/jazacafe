@@ -76,8 +76,10 @@ Taslak şema `packages/api/prisma/schema.prisma` içinde. Kilit noktalar:
 - `NowPlaying.accentColor` albüm kapağından çıkarılan dominant renk — MVP'de
   admin manuel giriyor; ileride bir image-processing adımıyla otomatikleştirilebilir
   (iş kuralı #7).
-- `LentRecord`, katalogdaki `Record`'dan ayrı: bağışlanan her fiziksel kopyayı
-  (`donorId`, `status`, `borrowerId`) temsil eder — "askıda plak" (ikinci faz).
+- "Askıda plak" (bir üyenin plak bağışlaması) şimdilik kapsam dışı bırakıldı —
+  şemada `LentRecord` yok. "Community Playlist" ayrı bir tablo olarak henüz
+  modellenmedi; tasarımda Topluluk (forum) ekranının bir parçası olacak,
+  Plak Kütüphanesi'nin değil — o ekran kurulurken buna göre şemaya eklenecek.
 
 ## MVP sırası — bu oturumda yapılan
 
