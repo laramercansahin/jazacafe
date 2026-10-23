@@ -100,21 +100,25 @@
   .tick span{ position:absolute; left:0; bottom:0; font-size:8.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--ghost); font-weight:400; }
   .tick.on span{ color:var(--cream); }
 
-  /* live numerals */
+  /* live venue status — two separate cards so Cafe and Demo Odası never blur together */
   .sec{ margin-top:56px; }
-  .live{ display:grid; grid-template-columns:auto 1fr; align-items:end; gap:10px; margin-top:16px; }
-  .num{ font-weight:200; font-size:78px; line-height:.9; letter-spacing:-.01em; display:flex; align-items:baseline; }
-  .num{ white-space:nowrap; }
-  .num small{ white-space:nowrap; font-size:18px; color:var(--ghost); margin-left:8px; letter-spacing:.04em; }
-  .dots{ display:grid; grid-template-columns:repeat(14,1fr); gap:5px; margin-top:20px; }
-  .dots i{ height:22px; border-left:1px solid var(--hair); position:relative; }
+  .venues{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
+  .venue{ padding:16px 15px; border:1px solid var(--hair); border-radius:16px; background:linear-gradient(160deg, rgba(255,255,255,.035), rgba(255,255,255,.01) 55%); }
+  .venue-top{ display:flex; align-items:center; gap:7px; margin-bottom:14px; }
+  .venue-top .dot{ flex:none; }
+  .venue-top span.micro{ color:var(--cream); }
+  .num{ font-weight:200; font-size:46px; line-height:.9; letter-spacing:-.01em; display:flex; align-items:baseline; white-space:nowrap; }
+  .num small{ white-space:nowrap; font-size:14px; color:var(--ghost); margin-left:6px; letter-spacing:.04em; }
+  .venue-status{ font-weight:200; font-style:italic; font-size:28px; line-height:1; }
+  .venue-status.full{ color:var(--live); }
+  .venue-status.open{ color:var(--ok); }
+  .dots{ display:grid; grid-template-columns:repeat(14,1fr); gap:3px; margin-top:14px; }
+  .dots i{ height:16px; border-left:1px solid var(--hair); position:relative; }
   .dots i.f{ border-color:var(--amber); }
-  .dots i.f::after{ content:''; position:absolute; left:-1px; bottom:0; width:1px; height:100%; background:var(--amber); box-shadow:0 0 8px rgba(232,168,104,.55); }
+  .dots i.f::after{ content:''; position:absolute; left:-1px; bottom:0; width:1px; height:100%; background:var(--amber); box-shadow:0 0 6px rgba(232,168,104,.55); }
   .dots i{ transform:scaleY(.2); transform-origin:bottom; transition:transform .8s var(--ease); transition-delay:calc(var(--k) * 45ms); }
   .in .dots i, .dots.in i{ transform:none; }
-  .room{ text-align:right; padding-bottom:6px; }
-  .room b{ display:block; font-weight:200; font-style:italic; font-size:26px; line-height:1; color:var(--live); margin-bottom:6px; }
-  .cap{ display:flex; justify-content:space-between; margin-top:12px; font-size:12px; letter-spacing:.05em; color:var(--mid); }
+  .venue-sub{ display:block; margin-top:12px; font-size:11px; letter-spacing:.05em; color:var(--mid); }
 
   /* index */
   .idx{ margin-top:56px; }
@@ -319,12 +323,19 @@
 
     <section class="sec pad">
       <div class="micro rv"><span style="color:var(--mid)">Şu an Jaza'da</span></div>
-      <div class="live rv" style="--i:1">
-        <div class="num">09<small>/ 14</small></div>
-        <div class="room"><b>dolu</b><span class="micro">Demo odası · 20:30</span></div>
+      <div class="venues rv" style="--i:1">
+        <div class="venue">
+          <div class="venue-top"><span class="dot"></span><span class="micro">Jaza Cafe</span></div>
+          <div class="num">09<small>/ 14</small></div>
+          <div class="dots" id="dots"></div>
+          <span class="venue-sub">5 kişilik yer açık</span>
+        </div>
+        <div class="venue">
+          <div class="venue-top"><span class="dot"></span><span class="micro">Demo Odası</span></div>
+          <div class="venue-status full">Dolu</div>
+          <span class="venue-sub">20:30'a kadar</span>
+        </div>
       </div>
-      <div class="dots rv" style="--i:2" id="dots"></div>
-      <div class="cap rv" style="--i:3"><span>Jaza Cafe</span><span>5 kişilik yer açık</span></div>
       <div class="inside rv" style="--i:4">
         <span class="micro">Şimdi içeride</span>
         <div class="mq"><div class="mq-t"><span>Gece Kuşu</span><span>Kasnak</span><span>Tonearm</span><span>Mor Vinil</span><span>Sessiz Oda</span><span>Pikap Ali</span><span>Gece Kuşu</span><span>Kasnak</span><span>Tonearm</span><span>Mor Vinil</span><span>Sessiz Oda</span><span>Pikap Ali</span></div></div>
