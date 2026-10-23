@@ -45,7 +45,7 @@
   .menu{ width:22px; height:14px; position:relative; border:0; background:none; padding:0; }
   .menu i{ position:absolute; left:0; height:1px; background:var(--cream); opacity:.85; }
   .menu i:nth-child(1){ top:3px; width:22px; } .menu i:nth-child(2){ top:10px; width:14px; }
-  .qr{ width:22px; height:22px; fill:none; stroke:var(--cream); stroke-width:1.1; opacity:.85; }
+  .hd-ic{ width:22px; height:22px; fill:none; stroke:var(--cream); stroke-width:1.1; opacity:.85; }
 
   /* --- scroll --- */
   .scroll{ position:absolute; inset:0; z-index:2; overflow-y:auto; overflow-x:hidden; scrollbar-width:none; padding:100px 0 96px; scroll-behavior:smooth; }
@@ -296,7 +296,7 @@
     <div class="bar">
       <button class="menu" aria-label="Menü"><i></i><i></i></button>
       <div class="logo" role="img" aria-label="Jaza"></div>
-      <a class="qr-l" href="jaza-demo-odasi-rezervasyon.html" aria-label="QR kodlarım"><svg class="qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v3M17 20h3"/></svg></a>
+      <a class="profile-l" href="jaza-uyelik.html" aria-label="Profilim"><svg class="hd-ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/></svg></a>
     </div>
   </div>
 
@@ -578,7 +578,7 @@
   });
 
   // page transition (curtain) for real pages
-  document.querySelectorAll('a.tile, a.qrb, a.qr-l, a.tab, a.night-link, a.night-cta').forEach(function(a){
+  document.querySelectorAll('a.tile, a.qrb, a.profile-l, a.tab, a.night-link, a.night-cta').forEach(function(a){
     a.addEventListener('click', function(e){
       var href = a.getAttribute('href');
       if (!href || href === '#'){ e.preventDefault(); return; }
