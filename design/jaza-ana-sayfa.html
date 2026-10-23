@@ -36,19 +36,19 @@
   @keyframes drift2{ to{ transform:translate(40px,-30px) scale(1.08);} }
 
   /* --- fixed header --- */
-  .hd{ position:absolute; z-index:6; top:0; left:0; right:0; height:112px; padding:16px 24px 0; background:var(--bg); transition:transform .35s var(--ease); pointer-events:none; }
+  .hd{ position:absolute; z-index:6; top:0; left:0; right:0; height:84px; padding:12px 24px 0; background:var(--bg); transition:transform .35s var(--ease); pointer-events:none; }
   .hd.hd-hidden{ transform:translateY(-100%); }
   .hd > *{ pointer-events:auto; }
   .time{ font-size:10px; letter-spacing:.18em; color:var(--mid); }
-  .bar{ position:relative; height:60px; display:flex; align-items:center; justify-content:space-between; }
-  .logo{ position:absolute; left:50%; top:50%; width:140px; aspect-ratio:700/350; background:var(--logo) center/contain no-repeat; transform:translate(-50%,-48%); transition:transform .6s var(--ease), opacity .6s; }
+  .bar{ position:relative; height:46px; display:flex; align-items:center; justify-content:space-between; }
+  .logo{ position:absolute; left:50%; top:50%; width:118px; aspect-ratio:700/350; background:var(--logo) center/contain no-repeat; transform:translate(-50%,-48%); transition:transform .6s var(--ease), opacity .6s; }
   .menu{ width:22px; height:14px; position:relative; border:0; background:none; padding:0; }
   .menu i{ position:absolute; left:0; height:1px; background:var(--cream); opacity:.85; }
   .menu i:nth-child(1){ top:3px; width:22px; } .menu i:nth-child(2){ top:10px; width:14px; }
   .qr{ width:22px; height:22px; fill:none; stroke:var(--cream); stroke-width:1.1; opacity:.85; }
 
   /* --- scroll --- */
-  .scroll{ position:absolute; inset:0; z-index:2; overflow-y:auto; overflow-x:hidden; scrollbar-width:none; padding:104px 0 96px; scroll-behavior:smooth; }
+  .scroll{ position:absolute; inset:0; z-index:2; overflow-y:auto; overflow-x:hidden; scrollbar-width:none; padding:78px 0 96px; scroll-behavior:smooth; }
   .scroll::-webkit-scrollbar{ display:none; }
   .pad{ padding:0 28px; }
 
