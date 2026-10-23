@@ -177,11 +177,13 @@
   .sig{ display:flex; align-items:center; gap:12px; font-size:12px; letter-spacing:.07em; color:var(--mid); }
   .sig i{ width:28px; height:1px; background:var(--ghost); }
 
-  /* upcoming */
-  .up{ margin-top:64px; display:flex; align-items:flex-end; justify-content:space-between; gap:12px; }
-  .up h3{ margin:10px 0 6px; font-weight:200; font-style:italic; font-size:25px; }
-  .up p{ margin:0; font-size:12px; letter-spacing:.06em; color:var(--mid); }
-  .up .ok{ color:var(--ok); }
+  /* upcoming — up to a couple of reservations, each its own row */
+  .up{ margin-top:64px; }
+  .up-list{ display:flex; flex-direction:column; gap:22px; margin-top:16px; }
+  .up-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; }
+  .up-row h3{ margin:0 0 6px; font-weight:200; font-style:italic; font-size:22px; }
+  .up-row p{ margin:0; font-size:12px; letter-spacing:.06em; color:var(--mid); }
+  .up-row .ok{ color:var(--ok); }
   .qrb{ width:54px; height:54px; border:1px solid var(--hair); border-radius:16px; display:flex; align-items:center; justify-content:center; flex:none; transition:border-color .4s, background .4s; }
   .qrb:hover{ border-color:var(--amber); background:rgba(232,168,104,.06); }
   .qrb svg{ width:26px; height:26px; fill:none; stroke:var(--amber); stroke-width:1.1; }
@@ -409,12 +411,17 @@
     </section>
 
     <section class="up pad">
-      <div class="rv">
-        <div class="micro">Yaklaşan rezervasyon</div>
-        <h3 id="upT">Demo Odası</h3>
-        <p id="upP">Cumartesi · 19:00 – 20:30 · <span class="ok">Onaylandı</span></p>
+      <div class="micro rv">Yaklaşan rezervasyonların</div>
+      <div class="up-list rv" style="--i:1" id="upList">
+        <div class="up-row">
+          <div><h3>Demo Odası</h3><p>Cumartesi · 19:00 – 20:30 · <span class="ok">Onaylandı</span></p></div>
+          <a class="qrb" href="jaza-demo-odasi-rezervasyon.html" aria-label="QR kodum"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v3M17 20h3"/></svg></a>
+        </div>
+        <div class="up-row">
+          <div><h3>Jaza Cafe</h3><p>Bugün · 14:20 · <span class="ok">Aktif</span></p></div>
+          <a class="qrb" href="jaza-kafe-rezervasyon.html" aria-label="QR kodum"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v3M17 20h3"/></svg></a>
+        </div>
       </div>
-      <a class="qrb rv" style="--i:1" href="jaza-demo-odasi-rezervasyon.html" aria-label="QR kodum"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v3M17 20h3"/></svg></a>
     </section>
 
     <div class="foot rv">Culture · Music · Cafe</div>
@@ -537,11 +544,17 @@
   function rest(){ card.classList.remove('touch'); card.style.setProperty('--rx','0deg'); card.style.setProperty('--ry','0deg'); }
   card.addEventListener('pointerleave', rest); card.addEventListener('pointerup', function(){ setTimeout(rest, 400); });
 
-  // upcoming reservation from the shared store (written by the booking pages)
+  // upcoming reservations from the shared store (written by the booking pages) — show up to 2
   try{
-    var rs = JSON.parse(localStorage.getItem('jaza.resv') || '[]').filter(function(r){ return r.kind === 'dr'; });
-    var upT = document.getElementById('upT'), upP = document.getElementById('upP');
-    if (rs.length){ upT.textContent = rs[0].room; upP.innerHTML = rs[0].date + ' · ' + rs[0].time + ' · <span class="ok">Onaylandı</span>'; }
+    var rs = JSON.parse(localStorage.getItem('jaza.resv') || '[]').slice(0, 2);
+    if (rs.length){
+      document.getElementById('upList').innerHTML = rs.map(function(r){
+        var href = r.kind === 'cf' ? 'jaza-kafe-rezervasyon.html' : 'jaza-demo-odasi-rezervasyon.html';
+        var status = r.kind === 'cf' ? 'Aktif' : 'Onaylandı';
+        return '<div class="up-row"><div><h3>' + r.room + '</h3><p>' + r.date + ' · ' + r.time + ' · <span class="ok">' + status + '</span></p></div>' +
+          '<a class="qrb" href="' + href + '" aria-label="QR kodum"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v3M17 20h3"/></svg></a></div>';
+      }).join('');
+    }
   }catch(_){}
   // arriving from another page: curtain lifts
   try{ if (document.referrer){ phone.classList.add('entering'); requestAnimationFrame(function(){ requestAnimationFrame(function(){ phone.classList.add('enter-go'); }); }); setTimeout(function(){ phone.classList.remove('entering','enter-go'); }, 1200); } }catch(_){}
