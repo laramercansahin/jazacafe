@@ -394,7 +394,7 @@ h1.pg em{ font-style:italic; color:var(--amber); font-weight:200; }
         <div class="card" id="card" role="button" tabindex="0" aria-label="Üyelik kartı, QR için çevir">
           <div class="face front">
             <div class="foil"></div>
-            <div class="c-top"><span class="c-logo" role="img" aria-label="Jaza"></span><span class="micro am" id="pTier">Premium</span></div>
+            <div class="c-top"><span class="c-logo" role="img" aria-label="Jaza"></span></div>
             <div class="c-mid"><span class="micro">Kod adı</span><b id="pCode">Gece Kuşu</b></div>
             <div class="c-bot"><span class="micro" id="pNo">Nº 0001</span><span class="micro" id="pYear">Üye · 2026</span></div>
           </div>
@@ -437,9 +437,9 @@ h1.pg em{ font-style:italic; color:var(--amber); font-weight:200; }
     </section>
   </div>
   <nav class="tabs" id="profileTabs" hidden>
-    <a class="tab" href="jaza-ana-sayfa.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg><span>Ana sayfa</span></a>
     <a class="tab" href="jaza-demo-odasi-rezervasyon.html"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="18" rx="1"/><circle cx="7.3" cy="12" r="1"/></svg><span>Rezervasyon</span></a>
     <a class="tab" href="jaza-topluluk.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H10l-5 4V5z"/></svg><span>Topluluk</span></a>
+    <a class="tab" href="jaza-ana-sayfa.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg><span>Ana sayfa</span></a>
     <a class="tab" href="jaza-etkinlikler.html"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4"/></svg><span>Etkinlik</span></a>
     <a class="tab on" href="jaza-uyelik.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-4 3.1-6.4 7-6.4s7 2.4 7 6.4"/></svg><span>Profil</span></a>
   </nav>
@@ -638,7 +638,7 @@ h1.pg em{ font-style:italic; color:var(--amber); font-weight:200; }
       etkinlikTur: eventPrefs.get(), enstruman: enstrumanYn.get(),
       katki: contrib.get(), gece: $('fGece').value.trim(), plak: plakYn.get(), sahne: sahneYn.get(),
       pazarlama: $('cPazarlama').checked, dogumgunu: $('cDogumgunu').checked, foto: $('cFoto').checked,
-      codeName: codeName, tier: 'Premium', memberNo: '00' + (1 + Math.floor(Math.random()*98)),
+      codeName: codeName, memberNo: '00' + (1 + Math.floor(Math.random()*98)),
       joinedAt: Date.now(), ref: 'JAZA-MEM-' + Math.random().toString(36).slice(2,7).toUpperCase()
     };
     JZ.store.set('profile', profile);
@@ -657,7 +657,6 @@ h1.pg em{ font-style:italic; color:var(--amber); font-weight:200; }
     $('pAvatar').textContent = (p.ad ? p.ad[0] : 'J').toUpperCase();
     $('pName').textContent = (p.ad + ' ' + p.soyad).trim() || 'Üye';
     $('pSince').textContent = p.codeName + ' · ' + new Date(p.joinedAt).getFullYear() + "'den beri üye";
-    $('pTier').textContent = p.tier;
     $('pCode').textContent = p.codeName;
     $('pNo').textContent = 'Nº ' + p.memberNo;
     $('pYear').textContent = 'Üye · ' + new Date(p.joinedAt).getFullYear();
