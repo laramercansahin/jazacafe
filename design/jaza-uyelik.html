@@ -241,6 +241,19 @@ h1.pg em{ font-style:italic; font-weight:200; }
 .c-note{ display:flex; flex-direction:column; align-items:center; gap:5px; }
 .cardhint{ text-align:center; font-size:10px; letter-spacing:.1em; color:var(--ghost); margin:0 0 20px; }
 
+/* upcoming reservations — same idiom as jaza-ana-sayfa.html */
+.up-list{ display:flex; flex-direction:column; gap:22px; margin-top:16px; }
+.up-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; }
+.up-row h3{ margin:0 0 6px; font-weight:200; font-style:italic; font-size:22px; }
+.up-row p{ margin:0; font-size:12px; letter-spacing:.06em; color:var(--mid); }
+.up-row .ok{ color:var(--ok); }
+.qrb{ width:54px; height:54px; border:1px solid var(--hair); border-radius:16px; display:flex; align-items:center; justify-content:center; flex:none; transition:border-color .4s, background .4s; }
+.qrb:hover{ border-color:var(--amber); background:rgba(232,168,104,.06); }
+.qrb svg{ width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.3; }
+.res-empty{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:16px; padding:16px 18px; border:1px dashed var(--hair-2); border-radius:16px; }
+.res-empty span{ font-size:12.5px; color:var(--mid); }
+.res-empty a{ font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--amber); white-space:nowrap; }
+
 /* stat rows */
 .rows .r{ display:flex; justify-content:space-between; gap:14px; padding:13px 0; border-top:1px solid var(--hair); font-size:13.5px; }
 .rows .r:last-child{ border-bottom:1px solid var(--hair); }
@@ -279,8 +292,29 @@ h1.pg em{ font-style:italic; font-weight:200; }
     <div class="bar"><span></span><div class="logo" role="img" aria-label="Jaza"></div><span></span></div>
   </div>
 
+  <!-- ============ GATE (not applied yet) ============ -->
+  <div class="scroll nobar" id="gateScroll">
+    <section class="pad">
+      <div class="eyebrow rv"><span class="micro">Üyelik</span><i></i><span class="micro am">Jaza'ya katıl</span></div>
+      <h1 class="pg rv" id="gateH1">
+        <span class="ln" style="--i:0"><span>Üye <em>ol</em></span></span>
+      </h1>
+      <p class="lede rv" style="--i:1">Müziğe ve sanata gönül veren insanların buluşma noktası. Üye olmak Demo Odası'na, etkinliklere ve topluluğa katılmanın ilk adımı — doldurması birkaç dakika sürer.</p>
+
+      <ul class="benefits rv" style="--i:2">
+        <li><span class="b-dot"></span>Jaza'ya ve Demo Odası'na erişim.</li>
+        <li><span class="b-dot"></span>Tüm Jaza etkinliklerine kontenjan dahilinde ücretsiz katılım.</li>
+        <li><span class="b-dot"></span>Üyelere özel gecelerin haberini herkesten önce alma.</li>
+      </ul>
+    </section>
+  </div>
+  <div class="act" id="gateAct">
+    <div class="sum"><span class="micro">Üyelik</span><b>2 dakika sürer</b></div>
+    <button class="btn fill" id="startForm">Başvur</button>
+  </div>
+
   <!-- ============ APPLICATION FORM (not a member yet) ============ -->
-  <div class="scroll nobar" id="formScroll">
+  <div class="scroll nobar" id="formScroll" hidden>
     <section class="pad">
       <div class="eyebrow rv"><span class="micro">Üyelik</span><i></i><span class="micro am">Jaza'ya katıl</span></div>
       <h1 class="pg rv" id="h1">
@@ -407,30 +441,33 @@ h1.pg em{ font-style:italic; font-weight:200; }
       </div>
       <p class="cardhint rv" style="--i:2">Kod adın yalnızca forum ve toplulukta görünür.</p>
 
-      <div class="sec-h rv" style="--i:2"><h2>Bilgilerin</h2></div>
-      <div class="rows rv" style="--i:3" id="infoRows"></div>
+      <div class="sec-h rv" style="--i:2"><h2>Rezervasyonların</h2></div>
+      <div class="up-list rv" style="--i:3" id="pResList"></div>
 
-      <div class="sec-h rv" style="--i:3"><h2>Müzik zevkin</h2></div>
-      <div class="rv" style="--i:4">
+      <div class="sec-h rv" style="--i:3"><h2>Bilgilerin</h2></div>
+      <div class="rows rv" style="--i:4" id="infoRows"></div>
+
+      <div class="sec-h rv" style="--i:4"><h2>Müzik zevkin</h2></div>
+      <div class="rv" style="--i:5">
         <span class="micro">Dinlediğin türler</span>
         <div class="tagwrap" id="tasteGenres"></div>
       </div>
-      <div class="rows rv" id="tasteRows" style="--i:4;margin-top:14px"></div>
+      <div class="rows rv" id="tasteRows" style="--i:5;margin-top:14px"></div>
 
-      <div class="sec-h rv" style="--i:4"><h2>Katkın</h2></div>
-      <div class="rv" style="--i:5">
+      <div class="sec-h rv" style="--i:5"><h2>Katkın</h2></div>
+      <div class="rv" style="--i:6">
         <span class="micro" id="contribLabel">—</span>
         <div class="tagwrap" id="contribTags"></div>
       </div>
 
-      <div class="sec-h rv" style="--i:5"><h2>Tercihlerin</h2></div>
-      <div class="rv" style="--i:6">
+      <div class="sec-h rv" style="--i:6"><h2>Tercihlerin</h2></div>
+      <div class="rv" style="--i:7">
         <div class="toggle-row"><div><p>Kampanya bildirimleri</p><span>SMS / e-posta / WhatsApp</span></div><button class="tgl" id="tglPazarlama"></button></div>
         <div class="toggle-row"><div><p>Doğum günü jesti</p><span>Doğum tarihini bu amaçla kullanırız</span></div><button class="tgl" id="tglDogumgunu"></button></div>
         <div class="toggle-row"><div><p>Fotoğraf / video izni</p><span>Etkinlik paylaşımlarında yer al</span></div><button class="tgl" id="tglFoto"></button></div>
       </div>
 
-      <div class="empty-end rv" style="--i:6">
+      <div class="empty-end rv" style="--i:7">
         <span class="micro">İstediğin zaman ayrılabilirsin</span>
         <button class="link" id="resetProfile">Formu yeniden doldur</button>
       </div>
@@ -486,7 +523,7 @@ h1.pg em{ font-style:italic; font-weight:200; }
   <div class="curtain"></div>
 </div>
 
-<div class="demo-ctl" id="dctl"><button data-s="form">Aday</button><button data-s="profile">Üye</button></div>
+<div class="demo-ctl" id="dctl"><button data-s="gate">Giriş</button><button data-s="form">Form</button><button data-s="profile">Üye</button></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -660,6 +697,22 @@ h1.pg em{ font-style:italic; font-weight:200; }
     $('pNo').textContent = 'Nº ' + p.memberNo;
     $('pYear').textContent = 'Üye · ' + new Date(p.joinedAt).getFullYear();
 
+    try{
+      var resv = JSON.parse(localStorage.getItem('jaza.resv') || '[]');
+      if (resv.length){
+        $('pResList').innerHTML = resv.slice(0, 3).map(function(r){
+          var href = r.kind === 'cf' ? 'jaza-kafe-rezervasyon.html' : 'jaza-demo-odasi-rezervasyon.html';
+          var status = r.kind === 'cf' ? 'Aktif' : 'Onaylandı';
+          return '<div class="up-row"><div><h3>' + r.room + '</h3><p>' + r.date + ' · ' + r.time + ' · <span class="ok">' + status + '</span></p></div>' +
+            '<a class="qrb" href="' + href + '" aria-label="QR kodum"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v3M17 20h3"/></svg></a></div>';
+        }).join('');
+      } else {
+        $('pResList').innerHTML = '<div class="res-empty"><span>Henüz bir rezervasyonun yok.</span><a href="jaza-ana-sayfa.html">Rezervasyon yap →</a></div>';
+      }
+    } catch(e){
+      $('pResList').innerHTML = '<div class="res-empty"><span>Henüz bir rezervasyonun yok.</span><a href="jaza-ana-sayfa.html">Rezervasyon yap →</a></div>';
+    }
+
     $('infoRows').innerHTML = [
       ['E-posta', p.eposta || '—'],
       ['Telefon', p.tel || '—'],
@@ -700,13 +753,16 @@ h1.pg em{ font-style:italic; font-weight:200; }
 
   $('resetProfile').addEventListener('click', function(){
     JZ.store.set('profile', null);
-    showState('form');
+    showState('gate');
   });
+
+  $('startForm').addEventListener('click', function(){ showState('form'); });
 
   /* ---------- state switching ---------- */
   function showState(s){
-    var isMember = s === 'profile';
-    $('formScroll').hidden = isMember; $('formAct').hidden = isMember;
+    var isGate = s === 'gate', isForm = s === 'form', isMember = s === 'profile';
+    $('gateScroll').hidden = !isGate; $('gateAct').hidden = !isGate;
+    $('formScroll').hidden = !isForm; $('formAct').hidden = !isForm;
     $('profileScroll').hidden = !isMember; $('profileTabs').hidden = !isMember;
     document.querySelectorAll('#dctl button').forEach(function(b){ b.classList.toggle('on', b.dataset.s === s); });
     if (isMember) renderProfile();
@@ -714,8 +770,8 @@ h1.pg em{ font-style:italic; font-weight:200; }
   }
   document.querySelectorAll('#dctl button').forEach(function(b){ b.addEventListener('click', function(){ showState(b.dataset.s); }); });
 
-  showState(JZ.store.get('profile', null) ? 'profile' : 'form');
-  setTimeout(function(){ $('h1').classList.add('in'); }, 60);
+  showState(JZ.store.get('profile', null) ? 'profile' : 'gate');
+  setTimeout(function(){ $('gateH1').classList.add('in'); $('h1').classList.add('in'); }, 60);
 })();
 </script>
 </body>
