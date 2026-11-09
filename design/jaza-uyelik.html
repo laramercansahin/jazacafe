@@ -355,6 +355,9 @@ h1.pg em{ font-style:italic; font-weight:200; }
           <li><span class="b-dot"></span>Üyelere özel gecelerin haberini herkesten önce alma.</li>
           <li><span class="b-dot"></span>Doğum gününde küçük bir jest.</li>
         </ul>
+        <p class="micro" style="margin:18px 0 10px">Üyelik tipin <b class="req">*</b></p>
+        <div class="chips" id="uyelikTipi"></div>
+        <p class="hint">Standart Üyelik yıllık ücret karşılığındadır. Dayanışma Üyeliği, mali durumun şu an buna uygun olmadığı durumlar için ücretsizdir.</p>
       </div>
 
       <!-- 3 — müzik zevki -->
@@ -413,7 +416,31 @@ h1.pg em{ font-style:italic; font-weight:200; }
   </div>
   <div class="act" id="formAct">
     <div class="sum"><span class="micro">Üyelik</span><b>Formu tamamla</b></div>
-    <button class="btn fill" id="submitForm">Üye ol</button>
+    <button class="btn fill" id="submitForm">Başvuruyu gönder</button>
+  </div>
+
+  <!-- ============ INTERVIEW SCHEDULING (submitted, not yet a member) ============ -->
+  <div class="scroll nobar" id="interviewScroll" hidden>
+    <section class="pad">
+      <div class="eyebrow rv"><span class="micro">Üyelik</span><i></i><span class="micro am">Son adım</span></div>
+      <h1 class="pg rv" id="ivH1">
+        <span class="ln" style="--i:0"><span>Görüşmeye <em>gel</em></span></span>
+      </h1>
+      <p class="lede rv" style="--i:1">Başvurun bize ulaştı — ama bu formu doldurmak seni otomatik üye yapmıyor. Üyeliğini başlatmak için Jaza'da kısa bir tanışma görüşmesi yapıyoruz; orada sorularını cevaplar, üyelik ücretini alır (ya da Dayanışma Üyeliği'ni onaylar) ve üyeliğini başlatırız.</p>
+
+      <p class="micro" style="margin-bottom:10px">Hangi gün uygun? <b class="req">*</b></p>
+      <div class="chips" id="gorusmeGun"></div>
+
+      <p class="micro" style="margin:18px 0 10px">Saat <b class="req">*</b></p>
+      <div class="chips" id="gorusmeSaat"></div>
+
+      <div class="field" style="margin-top:18px"><label class="micro">Eklemek istediğin bir şey (isteğe bağlı)</label><input id="fGorusmeNot" placeholder=""></div>
+      <p class="err" id="ivErr" style="margin-top:18px">Lütfen bir gün ve saat seç.</p>
+    </section>
+  </div>
+  <div class="act" id="ivAct" hidden>
+    <div class="sum"><span class="micro">Görüşme</span><b id="ivSum">Tarih seç</b></div>
+    <button class="btn fill" id="confirmInterview">Görüşmeyi onayla</button>
   </div>
 
   <!-- ============ PROFILE (member) ============ -->
@@ -428,7 +455,7 @@ h1.pg em{ font-style:italic; font-weight:200; }
         <div class="card" id="card" role="button" tabindex="0" aria-label="Üyelik kartı, QR için çevir">
           <div class="face front">
             <div class="foil"></div>
-            <div class="c-top"><span class="c-logo" role="img" aria-label="Jaza"></span></div>
+            <div class="c-top"><span class="c-logo" role="img" aria-label="Jaza"></span><span class="micro am" id="pTip"></span></div>
             <div class="c-mid"><span class="micro">Kod adı</span><b id="pCode">Gece Kuşu</b></div>
             <div class="c-bot"><span class="micro" id="pNo">Nº 0001</span><span class="micro" id="pYear">Üye · 2026</span></div>
           </div>
@@ -473,6 +500,30 @@ h1.pg em{ font-style:italic; font-weight:200; }
       </div>
     </section>
   </div>
+
+  <!-- ============ PENDING (interview scheduled, not yet paid / confirmed) ============ -->
+  <div class="scroll" id="pendingScroll" hidden>
+    <section class="pad">
+      <div class="p-head rv">
+        <div class="p-avatar" id="pdAvatar"></div>
+        <div><h1 id="pdName">—</h1><p id="pdStatus">—</p></div>
+      </div>
+
+      <div class="rv" style="--i:1; margin-top:8px; padding:18px 20px; border:1px dashed var(--hair-2); border-radius:16px;">
+        <span class="micro">Görüşme</span>
+        <h3 style="margin:8px 0 4px; font-weight:200; font-style:italic; font-size:22px; color:var(--cream);" id="pdWhen">—</h3>
+        <p class="micro am" id="pdTip">—</p>
+      </div>
+
+      <p class="lede rv" style="--i:2; margin-top:24px">Görüşmede sorularını cevaplar, üyelik ücretini alır (ya da Dayanışma Üyeliği'ni onaylar) ve üyeliğini başlatırız. Kapıda bu ekranı göstermen yeterli.</p>
+
+      <div class="empty-end rv" style="--i:3">
+        <span class="micro">Fikrini değiştirdin mi?</span>
+        <button class="link" id="cancelPending">Başvuruyu iptal et</button>
+      </div>
+    </section>
+  </div>
+
   <nav class="tabs" id="profileTabs" hidden>
     <a class="tab" href="jaza-topluluk.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H10l-5 4V5z"/></svg><span>Topluluk</span></a>
     <a class="tab" href="jaza-ana-sayfa.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg><span>Ana sayfa</span></a>
@@ -484,10 +535,10 @@ h1.pg em{ font-style:italic; font-weight:200; }
   <div class="panel" id="okPanel">
     <button class="panel-x" id="okX" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <svg class="okmark" viewBox="0 0 58 58"><circle cx="29" cy="29" r="26" pathLength="100"/><path d="M18 30l8 8 15-17" pathLength="100"/></svg>
-    <div class="eyebrow"><span class="micro am">Aramıza hoş geldin</span></div>
-    <h1 class="pg" style="font-size:34px">Artık bir <em>Jaza üyesisin</em></h1>
-    <p class="lede" style="margin-bottom:6px" id="okLede">Üyelik kartın hazır. Kapıda ve etkinliklerde bu QR'ı okutabilirsin.</p>
-    <div style="margin-top:20px"><button class="btn" id="okGo">Profiline git</button></div>
+    <div class="eyebrow"><span class="micro am" id="okEyebrow">Görüşmen planlandı</span></div>
+    <h1 class="pg" style="font-size:34px" id="okH1">Seni <em>bekliyoruz</em></h1>
+    <p class="lede" style="margin-bottom:6px" id="okLede">Jaza'da seni bekliyoruz.</p>
+    <div style="margin-top:20px"><button class="btn" id="okGo">Tamam</button></div>
   </div>
 
   <!-- legal: sözleşme -->
@@ -498,8 +549,9 @@ h1.pg em{ font-style:italic; font-weight:200; }
     <p>Topluluğumuzun huzuru için birkaç basit madde:</p>
     <ol>
       <li><b>Taraflar.</b> Bu sözleşme, Jaza ile üye arasında düzenlenmiştir.</li>
-      <li><b>Süre.</b> Üyelik, formun imzalandığı tarihte başlar ve 12 ay sürer; süre sonunda karşılıklı onayla yenilenir.</li>
-      <li><b>Üyelik ücreti.</b> Yıllık üyelik bedeli 3.600 ₺'dir (aylık 300 ₺ taksitle ödenebilir); tutar her yenilemede güncel fiyat üzerinden belirlenir.</li>
+      <li><b>Üyeliğin başlaması.</b> Bu formu göndermek seni otomatik olarak üye yapmaz. Başvurundan sonra Jaza'da kısa bir tanışma görüşmesi yapılır; üyelik görüşmede ödenen ücretle (veya Dayanışma Üyeliği'nde onayla) birlikte başlar.</li>
+      <li><b>Süre.</b> Üyelik, görüşmede başladığı tarihten itibaren 12 ay sürer; süre sonunda karşılıklı onayla yenilenir.</li>
+      <li><b>Üyelik ücreti.</b> İki üyelik tipi vardır: <b>Standart Üyelik</b> (yıllık _______ ₺, aylık taksitle ödenebilir) ve <b>Dayanışma Üyeliği</b> (mali durumu uygun olmayan üyeler için ücretsiz). Tutar her yenilemede güncel fiyat üzerinden belirlenir.</li>
       <li><b>Kişisel üyelik.</b> Üyelik sana özeldir, başkasına devredilemez.</li>
       <li><b>Demo Odası.</b> Rezervasyonlar en az 24 saat önceden yapılır; gelemeyecek olursan haber verirsin.</li>
       <li><b>Etkinlikler.</b> Ücretsiz katılım kontenjan dahilinde geçerlidir.</li>
@@ -524,7 +576,7 @@ h1.pg em{ font-style:italic; font-weight:200; }
   <div class="curtain"></div>
 </div>
 
-<div class="demo-ctl" id="dctl"><button data-s="gate">Giriş</button><button data-s="form">Form</button><button data-s="profile">Üye</button></div>
+<div class="demo-ctl" id="dctl"><button data-s="gate">Giriş</button><button data-s="form">Form</button><button data-s="interview">Görüşme</button><button data-s="pending">Bekliyor</button><button data-s="profile">Üye</button></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -605,6 +657,39 @@ h1.pg em{ font-style:italic; font-weight:200; }
   var heard = chipGroup('duyduk', ['Arkadaşımdan','Instagram','Mekanın önünden geçerken','Bir etkinlikte'], true);
   var eventPrefs = chipGroup('etkinlikTur', ['Canlı konser','DJ seti','Plak dinleme gecesi','Açık mikrofon'], true);
   var contrib = chipGroup('katki', ['DJ\'lik / set çalmak','Plak / müzik koleksiyonu','Canlı performans','Fotoğraf / video','Söyleşi / atölye','Organizasyon / gönüllülük','Sohbet ve enerji'], true);
+  var uyelikTipi = chipGroup('uyelikTipi', ['Standart Üyelik','Dayanışma Üyeliği'], false);
+
+  /* ---------- interview scheduling ---------- */
+  var DAYS = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+  var gunOptions = [];
+  for (var gi = 1; gi <= 6; gi++){
+    var gd = new Date(); gd.setDate(gd.getDate() + gi);
+    gunOptions.push(DAYS[gd.getDay()] + ' ' + gd.getDate());
+  }
+  var gorusmeGun = chipGroup('gorusmeGun', gunOptions, false);
+  var gorusmeSaat = chipGroup('gorusmeSaat', ['11:00','13:00','15:00','17:00','19:00'], false);
+  function updateIvSum(){
+    var g = gorusmeGun.get()[0], s = gorusmeSaat.get()[0];
+    $('ivSum').textContent = (g && s) ? (g + ' · ' + s) : 'Tarih seç';
+  }
+  $('gorusmeGun').addEventListener('click', updateIvSum);
+  $('gorusmeSaat').addEventListener('click', updateIvSum);
+
+  $('confirmInterview').addEventListener('click', function(){
+    var g = gorusmeGun.get()[0], s = gorusmeSaat.get()[0];
+    var bad = !g || !s;
+    $('ivErr').classList.toggle('show', bad);
+    if (bad){ $('ivErr').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+
+    var p = JZ.store.get('profile', null);
+    if (p){ p.gorusmeGun = g; p.gorusmeSaat = s; p.gorusmeNot = $('fGorusmeNot').value.trim(); JZ.store.set('profile', p); }
+
+    var isDayanisma = p && p.uyelikTipi === 'Dayanışma Üyeliği';
+    $('okEyebrow').textContent = 'Görüşmen planlandı';
+    $('okH1').innerHTML = 'Seni <em>bekliyoruz</em>';
+    $('okLede').textContent = g + ' · ' + s + " Jaza'da seni bekliyoruz. Orada " + (isDayanisma ? 'başvurunu birlikte değerlendirip' : 'üyelik ücretini alıp') + ' üyeliğini başlatacağız.';
+    openPanel('okPanel');
+  });
 
   function ynGroup(id){
     var el = $(id), v = null;
@@ -662,6 +747,7 @@ h1.pg em{ font-style:italic; font-weight:200; }
     required.forEach(function(pair){ var bad = !pair[1].value.trim(); markBad(pair[1], bad); if (bad) ok = false; });
     if (!$('cYas').checked || !$('cSozlesme').checked || !$('cKvkk').checked) ok = false;
     if (!hasSig) ok = false;
+    if (!uyelikTipi.get()[0]) ok = false;
     $('formErr').classList.toggle('show', !ok);
     if (!ok){ $('formErr').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
 
@@ -675,17 +761,21 @@ h1.pg em{ font-style:italic; font-weight:200; }
       etkinlikTur: eventPrefs.get(), enstruman: enstrumanYn.get(),
       katki: contrib.get(), gece: $('fGece').value.trim(), plak: plakYn.get(), sahne: sahneYn.get(),
       pazarlama: $('cPazarlama').checked, dogumgunu: $('cDogumgunu').checked, foto: $('cFoto').checked,
+      uyelikTipi: uyelikTipi.get()[0], status: 'pending',
       codeName: codeName, memberNo: '00' + (1 + Math.floor(Math.random()*98)),
       joinedAt: Date.now(), ref: 'JAZA-MEM-' + Math.random().toString(36).slice(2,7).toUpperCase()
     };
     JZ.store.set('profile', profile);
 
-    $('okLede').textContent = 'Üyelik kartın hazır. Kapıda ve etkinliklerde bu QR\'ı okutabilirsin.';
-    openPanel('okPanel');
+    showState('interview');
   });
 
   $('okX').addEventListener('click', function(){ closePanel('okPanel'); });
-  $('okGo').addEventListener('click', function(){ closePanel('okPanel'); showState('profile'); });
+  $('okGo').addEventListener('click', function(){ closePanel('okPanel'); showState('pending'); });
+  $('cancelPending').addEventListener('click', function(){
+    JZ.store.set('profile', null);
+    showState('gate');
+  });
 
   /* ---------- profile render ---------- */
   function renderProfile(){
@@ -697,6 +787,7 @@ h1.pg em{ font-style:italic; font-weight:200; }
     $('pCode').textContent = p.codeName;
     $('pNo').textContent = 'Nº ' + p.memberNo;
     $('pYear').textContent = 'Üye · ' + new Date(p.joinedAt).getFullYear();
+    $('pTip').textContent = p.uyelikTipi || 'Standart Üyelik';
 
     try{
       var resv = JSON.parse(localStorage.getItem('jaza.resv') || '[]');
@@ -739,6 +830,16 @@ h1.pg em{ font-style:italic; font-weight:200; }
     JZ.qr($('qrbox'), 'https://jaza.app/uye/' + p.ref, 176);
   }
 
+  function renderPending(){
+    var p = JZ.store.get('profile', null);
+    if (!p) return;
+    $('pdAvatar').textContent = (p.ad ? p.ad[0] : 'J').toUpperCase();
+    $('pdName').textContent = (p.ad + ' ' + p.soyad).trim() || 'Aday';
+    $('pdStatus').textContent = 'Başvurun alındı · görüşme bekleniyor';
+    $('pdWhen').textContent = (p.gorusmeGun && p.gorusmeSaat) ? (p.gorusmeGun + ' · ' + p.gorusmeSaat) : 'Görüşme tarihi seçilmedi';
+    $('pdTip').textContent = p.uyelikTipi || 'Standart Üyelik';
+  }
+
   ['tglPazarlama','tglDogumgunu','tglFoto'].forEach(function(id){
     $(id).addEventListener('click', function(){
       var key = id === 'tglPazarlama' ? 'pazarlama' : id === 'tglDogumgunu' ? 'dogumgunu' : 'foto';
@@ -761,18 +862,22 @@ h1.pg em{ font-style:italic; font-weight:200; }
 
   /* ---------- state switching ---------- */
   function showState(s){
-    var isGate = s === 'gate', isForm = s === 'form', isMember = s === 'profile';
+    var isGate = s === 'gate', isForm = s === 'form', isInterview = s === 'interview', isPending = s === 'pending', isMember = s === 'profile';
     $('gateScroll').hidden = !isGate; $('gateAct').hidden = !isGate;
     $('formScroll').hidden = !isForm; $('formAct').hidden = !isForm;
-    $('profileScroll').hidden = !isMember; $('profileTabs').hidden = !isMember;
+    $('interviewScroll').hidden = !isInterview; $('ivAct').hidden = !isInterview;
+    $('pendingScroll').hidden = !isPending;
+    $('profileScroll').hidden = !isMember;
+    $('profileTabs').hidden = !(isPending || isMember);
     document.querySelectorAll('#dctl button').forEach(function(b){ b.classList.toggle('on', b.dataset.s === s); });
     if (isMember) renderProfile();
+    if (isPending) renderPending();
     JZ.observe();
   }
   document.querySelectorAll('#dctl button').forEach(function(b){ b.addEventListener('click', function(){ showState(b.dataset.s); }); });
 
-  showState(JZ.store.get('profile', null) ? 'profile' : 'gate');
-  setTimeout(function(){ $('gateH1').classList.add('in'); $('h1').classList.add('in'); }, 60);
+  showState(JZ.store.get('profile', null) ? 'pending' : 'gate');
+  setTimeout(function(){ $('gateH1').classList.add('in'); $('h1').classList.add('in'); $('ivH1').classList.add('in'); }, 60);
 })();
 </script>
 </body>
