@@ -175,6 +175,15 @@ h1.pg em{ font-style:italic; font-weight:200; }
 .chip2:hover{ border-color:var(--hair-2); color:var(--cream); }
 .chip2.on{ border-color:var(--amber); color:var(--amber); background:rgba(232,168,104,.1); }
 
+/* membership type picker — two selectable description cards */
+.tier-pick{ display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
+.tier-opt{ display:block; width:100%; text-align:left; background:none; border:1px solid var(--hair); border-radius:16px; padding:16px 18px; transition:border-color .3s var(--ease), background .3s var(--ease); }
+.tier-opt:hover{ border-color:var(--hair-2); }
+.tier-opt .t-name{ display:block; font-weight:200; font-style:italic; font-size:16px; letter-spacing:.015em; color:var(--cream); margin-bottom:5px; }
+.tier-opt .t-desc{ display:block; font-size:12px; line-height:1.55; letter-spacing:.015em; color:var(--mid); }
+.tier-opt.on{ border-color:var(--amber); background:rgba(232,168,104,.07); }
+.tier-opt.on .t-name{ color:var(--amber); }
+
 /* yes/no segmented toggle */
 .yn{ display:flex; gap:8px; margin-bottom:8px; }
 .yn button{ flex:1; background:none; border:1px solid var(--hair); border-radius:12px; padding:11px 0; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mid); transition:all .4s var(--ease); }
@@ -356,8 +365,16 @@ h1.pg em{ font-style:italic; font-weight:200; }
           <li><span class="b-dot"></span>Doğum gününde küçük bir jest.</li>
         </ul>
         <p class="micro" style="margin:18px 0 10px">Üyelik tipin <b class="req">*</b></p>
-        <div class="chips" id="uyelikTipi"></div>
-        <p class="hint">Standart Üyelik yıllık ücret karşılığındadır. Dayanışma Üyeliği, mali durumun şu an buna uygun olmadığı durumlar için ücretsizdir.</p>
+        <div class="tier-pick" id="uyelikTipi">
+          <button type="button" class="tier-opt" data-v="Standart Üyelik">
+            <span class="t-name">Standart Üyelik</span>
+            <span class="t-desc">Yıllık üyelik bedelini ödeyerek katılırsın. Demo Odası, etkinlikler ve topluluğun tüm avantajları dahildir.</span>
+          </button>
+          <button type="button" class="tier-opt" data-v="Dayanışma Üyeliği">
+            <span class="t-name">Dayanışma Üyeliği</span>
+            <span class="t-desc">Mali durumun şu an üyelik bedelini karşılamaya uygun değilse, aynı avantajlarla ücretsiz başvurabilirsin. Görüşmede birlikte konuşuruz, bir şey kanıtlaman gerekmez.</span>
+          </button>
+        </div>
       </div>
 
       <!-- 3 — müzik zevki -->
@@ -657,7 +674,17 @@ h1.pg em{ font-style:italic; font-weight:200; }
   var heard = chipGroup('duyduk', ['Arkadaşımdan','Instagram','Mekanın önünden geçerken','Bir etkinlikte'], true);
   var eventPrefs = chipGroup('etkinlikTur', ['Canlı konser','DJ seti','Plak dinleme gecesi','Açık mikrofon'], true);
   var contrib = chipGroup('katki', ['DJ\'lik / set çalmak','Plak / müzik koleksiyonu','Canlı performans','Fotoğraf / video','Söyleşi / atölye','Organizasyon / gönüllülük','Sohbet ve enerji'], true);
-  var uyelikTipi = chipGroup('uyelikTipi', ['Standart Üyelik','Dayanışma Üyeliği'], false);
+  function tierPick(id){
+    var el = $(id), v = null;
+    el.querySelectorAll('.tier-opt').forEach(function(b){
+      b.addEventListener('click', function(){
+        v = b.dataset.v;
+        el.querySelectorAll('.tier-opt').forEach(function(x){ x.classList.toggle('on', x === b); });
+      });
+    });
+    return { get: function(){ return v; } };
+  }
+  var uyelikTipi = tierPick('uyelikTipi');
 
   /* ---------- interview scheduling ---------- */
   var DAYS = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
@@ -747,7 +774,7 @@ h1.pg em{ font-style:italic; font-weight:200; }
     required.forEach(function(pair){ var bad = !pair[1].value.trim(); markBad(pair[1], bad); if (bad) ok = false; });
     if (!$('cYas').checked || !$('cSozlesme').checked || !$('cKvkk').checked) ok = false;
     if (!hasSig) ok = false;
-    if (!uyelikTipi.get()[0]) ok = false;
+    if (!uyelikTipi.get()) ok = false;
     $('formErr').classList.toggle('show', !ok);
     if (!ok){ $('formErr').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
 
@@ -761,7 +788,7 @@ h1.pg em{ font-style:italic; font-weight:200; }
       etkinlikTur: eventPrefs.get(), enstruman: enstrumanYn.get(),
       katki: contrib.get(), gece: $('fGece').value.trim(), plak: plakYn.get(), sahne: sahneYn.get(),
       pazarlama: $('cPazarlama').checked, dogumgunu: $('cDogumgunu').checked, foto: $('cFoto').checked,
-      uyelikTipi: uyelikTipi.get()[0], status: 'pending',
+      uyelikTipi: uyelikTipi.get(), status: 'pending',
       codeName: codeName, memberNo: '00' + (1 + Math.floor(Math.random()*98)),
       joinedAt: Date.now(), ref: 'JAZA-MEM-' + Math.random().toString(36).slice(2,7).toUpperCase()
     };
