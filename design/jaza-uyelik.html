@@ -100,23 +100,6 @@ h1.pg em{ font-weight:200; }
 .link{ background:none; border:0; padding:0; font-size:9px; font-weight:400; letter-spacing:.22em; text-transform:uppercase; color:var(--mid); border-bottom:1px solid var(--hair-2); padding-bottom:3px; transition:color .3s, border-color .3s; }
 .link:hover{ color:var(--amber); border-color:var(--amber); }
 
-/* ---------- form ---------- */
-.field{ position:relative; margin-bottom:22px; }
-.field label{ display:block; margin-bottom:8px; }
-.field input, .field textarea, .field select{ width:100%; background:transparent; border:0; border-bottom:1px solid var(--hair-2); padding:8px 0 10px; font-size:17px; font-weight:300; letter-spacing:.02em; outline:none; border-radius:0; transition:border-color .4s; }
-.field textarea{ resize:none; min-height:84px; line-height:1.5; }
-.field select{ appearance:none; -webkit-appearance:none; }
-.field select option{ background:#2D1810; color:var(--cream); }
-.field input::placeholder, .field textarea::placeholder{ color:var(--ghost); font-style:italic; }
-.field input:focus, .field textarea:focus, .field select:focus{ border-color:var(--amber); }
-.field.bad input, .field.bad textarea, .field input.bad{ border-color:var(--err); }
-.err{ display:none; margin:6px 0 0; font-size:11px; letter-spacing:.06em; color:var(--err); }
-.err.show{ display:block; }
-.sq{ display:flex; align-items:center; justify-content:center; min-width:46px; height:46px; background:none; border:1px solid var(--hair); border-radius:12px; font-size:15px; font-weight:300; letter-spacing:.04em; transition:border-color .4s, background .4s, color .4s, transform .5s var(--ease); }
-.sq:hover{ border-color:var(--hair-2); }
-.sq.on{ border-color:var(--amber); color:var(--amber); background:rgba(232,168,104,.1); }
-.sq.off{ color:var(--ghost); text-decoration:line-through; opacity:.45; pointer-events:none; }
-
 /* ---------- fixed bottom action ---------- */
 .act{ position:absolute; z-index:7; left:0; right:0; bottom:0; padding:34px 24px 20px; background:linear-gradient(0deg, var(--bg) 62%, rgba(37,18,12,0)); display:flex; align-items:center; gap:16px; }
 .act .sum{ flex:1; min-width:0; } .act .sum b{ display:block; margin-top:6px; font-style:italic; font-weight:200; font-size:17px; letter-spacing:.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -128,7 +111,7 @@ h1.pg em{ font-weight:200; }
 .tab svg{ width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round; transition:stroke .4s; }
 .tab.on{ color:var(--amber); } .tab.on::before{ width:26px; left:calc(50% - 13px); }
 
-/* ---------- overlay panel (success, detail) ---------- */
+/* ---------- overlay panel ---------- */
 .panel{ position:absolute; inset:0; z-index:9; background:var(--bg); overflow-y:auto; scrollbar-width:none; padding:84px 28px 40px; opacity:0; visibility:hidden; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease), visibility 0s .7s; }
 .panel::-webkit-scrollbar{ display:none; }
 .panel.show{ opacity:1; visibility:visible; transform:none; transition-delay:0s; }
@@ -156,78 +139,9 @@ h1.pg em{ font-weight:200; }
 }
 
 /* ==========================================================================
-   page-specific — application form + profile
+   page-specific — member profile
+   (the membership application form is coming in a later version)
    ========================================================================== */
-
-/* numbered step sections, same idiom as jaza-hifi-danismanlik.html */
-.step{ margin-top:40px; }
-.step:first-of-type{ margin-top:8px; }
-.step .sh{ display:flex; align-items:baseline; gap:14px; margin-bottom:16px; }
-.step .sh .n{ font-weight:200; font-size:13px; letter-spacing:.2em; color:var(--amber); }
-.step .sh h2{ margin:0; font-weight:200; font-style:italic; font-size:22px; letter-spacing:.02em; }
-.step .hint{ margin:-8px 0 18px; font-size:12px; line-height:1.55; color:var(--mid); }
-
-.row2{ display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
-
-/* chip multi/single-select — reused for genres, how-heard, events, contributions */
-.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
-.chip2{ background:none; border:1px solid var(--hair); border-radius:100px; padding:9px 15px; font-size:11.5px; letter-spacing:.02em; color:var(--mid); transition:all .4s var(--ease); }
-.chip2:hover{ border-color:var(--hair-2); color:var(--cream); }
-.chip2.on{ border-color:var(--amber); color:var(--amber); background:rgba(232,168,104,.1); }
-
-/* membership type picker — two selectable description cards */
-.tier-pick{ display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
-.tier-opt{ display:block; width:100%; text-align:left; background:none; border:1px solid var(--hair); border-radius:16px; padding:16px 18px; transition:border-color .3s var(--ease), background .3s var(--ease); }
-.tier-opt:hover{ border-color:var(--hair-2); }
-.tier-opt .t-name{ display:block; font-weight:200; font-style:italic; font-size:16px; letter-spacing:.015em; color:var(--cream); margin-bottom:5px; }
-.tier-opt .t-desc{ display:block; font-size:12px; line-height:1.55; letter-spacing:.015em; color:var(--mid); }
-.tier-opt.on{ border-color:var(--amber); background:rgba(232,168,104,.07); }
-.tier-opt.on .t-name{ color:var(--amber); }
-
-/* yes/no segmented toggle */
-.yn{ display:flex; gap:8px; margin-bottom:8px; }
-.yn button{ flex:1; background:none; border:1px solid var(--hair); border-radius:12px; padding:11px 0; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mid); transition:all .4s var(--ease); }
-.yn button.on{ border-color:var(--amber); color:var(--amber); background:rgba(232,168,104,.1); }
-
-/* benefits list — step 2, read-only */
-.benefits{ list-style:none; margin:0 0 8px; padding:0; display:flex; flex-direction:column; gap:14px; }
-.benefits li{ display:flex; gap:12px; font-size:13.5px; line-height:1.5; color:var(--cream); }
-.benefits li .b-dot{ flex:none; width:6px; height:6px; margin-top:7px; border-radius:50%; background:var(--amber); }
-
-/* checkbox row — consents. The "read the text" link sits outside the <label>
-   on purpose: nested inside it, clicking the link would also toggle the
-   checkbox via the browser's native label-click behavior. */
-.cb-row{ padding:14px 0; border-top:1px solid var(--hair); }
-.cb-row:last-of-type{ border-bottom:1px solid var(--hair); }
-.cb{ display:flex; align-items:flex-start; gap:12px; cursor:pointer; }
-.cb input{ display:none; }
-.cb .box{ flex:none; width:19px; height:19px; margin-top:1px; border:1px solid var(--hair-2); border-radius:5px; display:flex; align-items:center; justify-content:center; transition:all .3s; }
-.cb input:checked + .box{ background:var(--amber); border-color:var(--amber); }
-.cb input:checked + .box svg{ opacity:1; transform:scale(1); }
-.cb .box svg{ width:11px; height:11px; stroke:#25120C; stroke-width:2.4; opacity:0; transform:scale(.5); transition:all .2s; }
-.cb p{ margin:0; font-size:12.5px; line-height:1.55; color:var(--mid); }
-.cb p b{ color:var(--cream); font-weight:400; }
-.cb .req{ color:var(--err); }
-.cb-row a.read{ display:inline-block; margin:8px 0 0 31px; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--amber); border-bottom:1px solid rgba(232,168,104,.4); }
-
-/* signature pad */
-.sigwrap{ margin-top:10px; }
-.sigpad{ width:100%; height:140px; border:1px dashed var(--hair-2); border-radius:14px; touch-action:none; background:rgba(255,255,255,.015); }
-.sigrow{ display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
-.sigrow .ph{ font-size:10px; letter-spacing:.1em; color:var(--ghost); }
-
-/* ---- legal text overlay panel ---- */
-.legal h1{ font-size:28px; }
-.legal ol{ margin:18px 0 0; padding-left:20px; display:flex; flex-direction:column; gap:14px; }
-.legal li{ font-size:13px; line-height:1.6; color:var(--mid); }
-.legal li b{ color:var(--cream); font-weight:400; }
-.legal p{ font-size:13px; line-height:1.6; color:var(--mid); margin:0 0 14px; }
-
-/* ---- success ---- */
-.okmark{ width:58px; height:58px; margin:0 0 20px; }
-.okmark circle, .okmark path{ fill:none; stroke:var(--ok); stroke-width:1.2; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:100; stroke-dashoffset:100; }
-.panel.show .okmark circle{ animation:dr 1s var(--ease) .15s forwards; } .panel.show .okmark path{ animation:dr .7s var(--ease) .8s forwards; }
-@keyframes dr{ to{ stroke-dashoffset:0; } }
 
 /* ---- profile ---- */
 .p-head{ display:flex; align-items:center; gap:14px; margin-bottom:28px; }
@@ -235,7 +149,7 @@ h1.pg em{ font-weight:200; }
 .p-head h1{ margin:0 0 4px; font-weight:200; font-style:italic; font-size:24px; letter-spacing:.015em; }
 .p-head p{ margin:0; font-size:11px; letter-spacing:.05em; color:var(--mid); }
 
-/* membership card — same component as jaza-ana-sayfa.html */
+/* membership card */
 .cardwrap{ perspective:900px; margin-bottom:10px; }
 .card{ --flip:0deg; position:relative; height:180px; transform-style:preserve-3d; transform:rotateY(var(--flip)); transition:transform .8s var(--ease); cursor:pointer; outline:none; }
 .face{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:linear-gradient(150deg,#3b2015,#1c0d07 70%); overflow:hidden; border-radius:18px; padding:18px 20px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 20px 40px rgba(0,0,0,.45); }
@@ -250,7 +164,7 @@ h1.pg em{ font-weight:200; }
 .c-note{ display:flex; flex-direction:column; align-items:center; gap:5px; }
 .cardhint{ text-align:center; font-size:10px; letter-spacing:.1em; color:var(--ghost); margin:0 0 20px; }
 
-/* upcoming reservations — same idiom as jaza-ana-sayfa.html */
+/* upcoming reservations */
 .up-list{ display:flex; flex-direction:column; gap:22px; margin-top:16px; }
 .up-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; }
 .up-row h3{ margin:0 0 6px; font-weight:200; font-style:italic; font-size:22px; }
@@ -282,15 +196,6 @@ h1.pg em{ font-weight:200; }
 .tgl::after{ content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:var(--cream); transition:transform .3s var(--ease); }
 .tgl.on{ background:var(--amber); }
 .tgl.on::after{ transform:translateX(16px); background:#25120C; }
-
-.empty-end{ margin-top:46px; text-align:center; }
-.empty-end .micro{ display:block; margin-bottom:14px; }
-
-/* demo state switcher — not part of the app, lets reviewers flip between states */
-.demo-ctl{ position:fixed; left:18px; bottom:18px; z-index:50; display:flex; background:rgba(237,228,213,.06); border:1px solid rgba(237,228,213,.18); border-radius:100px; padding:3px; }
-.demo-ctl button{ background:none; border:0; border-radius:100px; padding:8px 14px; font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:#B7A491; cursor:pointer; }
-.demo-ctl button.on{ background:#E8A868; color:#25120C; }
-@media (max-width:760px){ .demo-ctl{ left:50%; transform:translateX(-50%); bottom:auto; top:18px; } }
 </style>
 </head>
 <body>
@@ -301,167 +206,11 @@ h1.pg em{ font-weight:200; }
     <div class="bar"><span></span><div class="logo" role="img" aria-label="Jaza"></div><span></span></div>
   </div>
 
-  <!-- ============ GATE (not applied yet) ============ -->
-  <div class="scroll nobar" id="gateScroll">
-    <section class="pad">
-      <div class="eyebrow rv"><span class="micro">Üyelik</span><i></i><span class="micro am">Jaza'ya katıl</span></div>
-      <h1 class="pg rv" id="gateH1">
-        <span class="ln" style="--i:0"><span>Üye <em>ol</em></span></span>
-      </h1>
-      <p class="lede rv" style="--i:1">Müziğe ve sanata gönül veren insanların buluşma noktası. Üye olmak Demo Odası'na, etkinliklere ve topluluğa katılmanın ilk adımı — doldurması birkaç dakika sürer.</p>
-
-      <ul class="benefits rv" style="--i:2">
-        <li><span class="b-dot"></span>Jaza'ya ve Demo Odası'na erişim.</li>
-        <li><span class="b-dot"></span>Tüm Jaza etkinliklerine kontenjan dahilinde ücretsiz katılım.</li>
-        <li><span class="b-dot"></span>Üyelere özel gecelerin haberini herkesten önce alma.</li>
-      </ul>
-    </section>
-  </div>
-  <div class="act" id="gateAct">
-    <div class="sum"><span class="micro">Üyelik</span><b>2 dakika sürer</b></div>
-    <button class="btn fill" id="startForm">Başvur</button>
-  </div>
-
-  <!-- ============ APPLICATION FORM (not a member yet) ============ -->
-  <div class="scroll nobar" id="formScroll" hidden>
-    <section class="pad">
-      <div class="eyebrow rv"><span class="micro">Üyelik</span><i></i><span class="micro am">Jaza'ya katıl</span></div>
-      <h1 class="pg rv" id="h1">
-        <span class="ln" style="--i:0"><span>Üyelik <em>formu</em></span></span>
-      </h1>
-      <p class="lede rv" style="--i:1">Müziğe ve sanata gönül veren insanların buluşma noktası. Bu formu doldurarak aramıza katılabilirsin — seni Jaza'da görmek isteriz.</p>
-
-      <!-- 1 — kimlik -->
-      <div class="step rv">
-        <div class="sh"><span class="n">01</span><h2>Seni tanıyalım</h2></div>
-        <p class="hint">* ile işaretli alanlar zorunlu.</p>
-        <div class="row2">
-          <div class="field"><label class="micro">Ad *</label><input id="fAd" placeholder="Elif"></div>
-          <div class="field"><label class="micro">Soyad *</label><input id="fSoyad" placeholder="Yılmaz"></div>
-        </div>
-        <div class="row2">
-          <div class="field"><label class="micro">Doğum tarihi *</label><input id="fDogum" placeholder="gg / aa / yyyy"></div>
-          <div class="field"><label class="micro">Telefon *</label><input id="fTel" placeholder="+90 5xx xxx xx xx" type="tel"></div>
-        </div>
-        <div class="field"><label class="micro">E-posta *</label><input id="fEposta" placeholder="elif@ornek.com" type="email"></div>
-        <div class="row2">
-          <div class="field"><label class="micro">Instagram (isteğe bağlı)</label><input id="fInsta" placeholder="@kullaniciadi"></div>
-          <div class="field"><label class="micro">Meslek / okul (isteğe bağlı)</label><input id="fMeslek" placeholder=""></div>
-        </div>
-        <div class="field"><label class="micro">Acil durumda ulaşılacak kişi (isteğe bağlı)</label><input id="fAcil" placeholder="Ad soyad, telefon"></div>
-        <p class="micro" style="margin-bottom:10px">Jaza'yı nereden duydun?</p>
-        <div class="chips" id="duyduk"></div>
-        <div class="field" style="margin-top:4px"><input id="fDuydukDiger" placeholder="Başka bir yer? Yaz."></div>
-      </div>
-
-      <!-- 2 — avantajlar -->
-      <div class="step rv">
-        <div class="sh"><span class="n">02</span><h2>Üyelere neler sunuyoruz?</h2></div>
-        <ul class="benefits">
-          <li><span class="b-dot"></span>Jaza'ya ve Demo Odası'na erişim.</li>
-          <li><span class="b-dot"></span>Demo Odası'nı rezerve edebilme, yanında 3 kişi getirebilme.</li>
-          <li><span class="b-dot"></span>Tüm Jaza etkinliklerine kontenjan dahilinde ücretsiz katılım.</li>
-          <li><span class="b-dot"></span>Üyelere özel gecelerin haberini herkesten önce alma.</li>
-          <li><span class="b-dot"></span>Doğum gününde küçük bir jest.</li>
-        </ul>
-        <p class="micro" style="margin:18px 0 10px">Üyelik tipin <b class="req">*</b></p>
-        <div class="tier-pick" id="uyelikTipi">
-          <button type="button" class="tier-opt" data-v="Standart Üyelik">
-            <span class="t-name">Standart Üyelik</span>
-            <span class="t-desc">Yıllık üyelik bedelini ödeyerek katılırsın. Demo Odası, etkinlikler ve topluluğun tüm avantajları dahildir.</span>
-          </button>
-          <button type="button" class="tier-opt" data-v="Dayanışma Üyeliği">
-            <span class="t-name">Dayanışma Üyeliği</span>
-            <span class="t-desc">Mali durumun şu an üyelik bedelini karşılamaya uygun değilse, aynı avantajlarla ücretsiz başvurabilirsin. Görüşmede birlikte konuşuruz, bir şey kanıtlaman gerekmez.</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- 3 — müzik zevki -->
-      <div class="step rv">
-        <div class="sh"><span class="n">03</span><h2>Müzik zevkini paylaş</h2></div>
-        <p class="hint">Jaza'yı birlikte kuruyoruz — bu bölüm isteğe bağlı, ama doldurursan çalma listelerimizi sana göre şekillendirebiliriz.</p>
-        <p class="micro" style="margin-bottom:10px">Hangi türleri dinlersin?</p>
-        <div class="chips" id="turler"></div>
-        <div class="field" style="margin-top:4px"><input id="fTurDiger" placeholder="Listede olmayan bir tür?"></div>
-        <div class="field"><label class="micro">En çok dinlediğin 3 sanatçı / grup</label><input id="fSanatci" placeholder=""></div>
-        <div class="field"><label class="micro">Son dönemde en çok dönen şarkın</label><input id="fSarki" placeholder=""></div>
-        <p class="micro" style="margin-bottom:10px">Hangi etkinliklerde seni görmek isteriz?</p>
-        <div class="chips" id="etkinlikTur"></div>
-        <p class="micro" style="margin:18px 0 10px">Bir enstrüman çalıyor veya üretim yapıyor musun?</p>
-        <div class="yn" id="enstrumanYn"><button data-v="evet">Evet</button><button data-v="hayir">Hayır</button></div>
-        <div class="field" id="enstrumanDetay" hidden><input placeholder="Ne çalıyor / üretiyorsun?"></div>
-        <div class="field"><label class="micro">Jaza'da hiç duymak istemediğin bir tür / şarkı var mı?</label><input id="fIstemedigin" placeholder=""></div>
-        <div class="field"><label class="micro">Jaza'da çalmasını önermek istediğin bir şarkı / sanatçı</label><input id="fOneri" placeholder=""></div>
-      </div>
-
-      <!-- 4 — katkı -->
-      <div class="step rv">
-        <div class="sh"><span class="n">04</span><h2>Katkı & sahne</h2></div>
-        <p class="micro" style="margin-bottom:10px">Jaza'ya neyle katkı verebilirsin?</p>
-        <div class="chips" id="katki"></div>
-        <div class="field" style="margin-top:4px"><input id="fKatkiDiger" placeholder="Başka bir katkı?"></div>
-        <div class="field"><label class="micro">Jaza'da hangi gecenin yapılmasını isterdin?</label><input id="fGece" placeholder=""></div>
-        <p class="micro" style="margin:18px 0 10px">Kendi plaklarını getirip çalmak ister misin?</p>
-        <div class="yn" id="plakYn"><button data-v="evet">Evet</button><button data-v="hayir">Hayır</button></div>
-        <p class="micro" style="margin:18px 0 10px">Jaza'da sahne almak ister misin?</p>
-        <div class="yn" id="sahneYn"><button data-v="evet">Evet</button><button data-v="hayir">Hayır</button></div>
-      </div>
-
-      <!-- 5 — onaylar -->
-      <div class="step rv">
-        <div class="sh"><span class="n">05</span><h2>Onaylar</h2></div>
-        <div class="cb-row"><label class="cb"><input type="checkbox" id="cYas"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><p>18 yaşından büyüğüm. <b class="req">*</b></p></label></div>
-        <div class="cb-row"><label class="cb"><input type="checkbox" id="cSozlesme"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><p><b>Üyelik sözleşmesini</b> okudum, anladım ve kabul ediyorum. <b class="req">*</b></p></label><a class="read" id="openSozlesme">Sözleşme metnini aç →</a></div>
-        <div class="cb-row"><label class="cb"><input type="checkbox" id="cKvkk"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><p><b>KVKK Aydınlatma Metni'ni</b> okudum. <b class="req">*</b></p></label><a class="read" id="openKvkk">KVKK metnini aç →</a></div>
-        <div class="cb-row"><label class="cb"><input type="checkbox" id="cPazarlama"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><p>Kampanya ve duyurular hakkında SMS / e-posta / WhatsApp ile bilgilendirilmeyi kabul ediyorum.</p></label></div>
-        <div class="cb-row"><label class="cb"><input type="checkbox" id="cDogumgunu"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><p>Doğum tarihimin doğum günü jesti için kullanılmasına izin veriyorum.</p></label></div>
-        <div class="cb-row"><label class="cb"><input type="checkbox" id="cFoto"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><p>Etkinliklerde çekilen fotoğraf / videolarda yer almamın Jaza kanallarında paylaşılmasına izin veriyorum.</p></label></div>
-
-        <div class="row2" style="margin-top:22px">
-          <div class="field"><label class="micro">Ad soyad *</label><input id="fOnayAd" placeholder=""></div>
-          <div class="field"><label class="micro">Tarih</label><input id="fTarih" disabled></div>
-        </div>
-        <p class="micro" style="margin-bottom:8px">İmza *</p>
-        <div class="sigwrap">
-          <canvas class="sigpad" id="sigPad"></canvas>
-          <div class="sigrow"><span class="ph">Kutuya dokunup dijital olarak imzala</span><button class="link" id="sigClear">Temizle</button></div>
-        </div>
-        <p class="err" id="formErr" style="margin-top:18px">Lütfen zorunlu alanları ve imzayı tamamla.</p>
-      </div>
-    </section>
-  </div>
-  <div class="act" id="formAct">
-    <div class="sum"><span class="micro">Üyelik</span><b>Formu tamamla</b></div>
-    <button class="btn fill" id="submitForm">Başvuruyu gönder</button>
-  </div>
-
-  <!-- ============ INTERVIEW SCHEDULING (submitted, not yet a member) ============ -->
-  <div class="scroll nobar" id="interviewScroll" hidden>
-    <section class="pad">
-      <div class="eyebrow rv"><span class="micro">Üyelik</span><i></i><span class="micro am">Son adım</span></div>
-      <h1 class="pg rv" id="ivH1">
-        <span class="ln" style="--i:0"><span>Görüşmeye <em>gel</em></span></span>
-      </h1>
-      <p class="lede rv" style="--i:1">Başvurun bize ulaştı — ama bu formu doldurmak seni otomatik üye yapmıyor. Üyeliğini başlatmak için Jaza'da kısa bir tanışma görüşmesi yapıyoruz; orada sorularını cevaplar, üyelik ücretini alır (ya da Dayanışma Üyeliği'ni onaylar) ve üyeliğini başlatırız.</p>
-
-      <p class="micro" style="margin-bottom:10px">Hangi gün uygun? <b class="req">*</b></p>
-      <div class="chips" id="gorusmeGun"></div>
-
-      <p class="micro" style="margin:18px 0 10px">Saat <b class="req">*</b></p>
-      <div class="chips" id="gorusmeSaat"></div>
-
-      <div class="field" style="margin-top:18px"><label class="micro">Eklemek istediğin bir şey (isteğe bağlı)</label><input id="fGorusmeNot" placeholder=""></div>
-      <p class="err" id="ivErr" style="margin-top:18px">Lütfen bir gün ve saat seç.</p>
-    </section>
-  </div>
-  <div class="act" id="ivAct" hidden>
-    <div class="sum"><span class="micro">Görüşme</span><b id="ivSum">Tarih seç</b></div>
-    <button class="btn fill" id="confirmInterview">Görüşmeyi onayla</button>
-  </div>
-
-  <!-- ============ PROFILE (member) ============ -->
-  <div class="scroll" id="profileScroll" hidden>
+  <!-- ============ PROFILE ============ -->
+  <!-- The membership application form (sign-up, interview scheduling) is
+       coming in a later version — for now this screen shows the member
+       profile directly. -->
+  <div class="scroll" id="profileScroll">
     <section class="pad">
       <div class="p-head rv">
         <div class="p-avatar" id="pAvatar"></div>
@@ -510,104 +259,19 @@ h1.pg em{ font-weight:200; }
         <div class="toggle-row"><div><p>Doğum günü jesti</p><span>Doğum tarihini bu amaçla kullanırız</span></div><button class="tgl" id="tglDogumgunu"></button></div>
         <div class="toggle-row"><div><p>Fotoğraf / video izni</p><span>Etkinlik paylaşımlarında yer al</span></div><button class="tgl" id="tglFoto"></button></div>
       </div>
-
-      <div class="empty-end rv" style="--i:7">
-        <span class="micro">İstediğin zaman ayrılabilirsin</span>
-        <button class="link" id="resetProfile">Formu yeniden doldur</button>
-      </div>
     </section>
   </div>
 
-  <!-- ============ PENDING (interview scheduled, not yet paid / confirmed) ============ -->
-  <div class="scroll" id="pendingScroll" hidden>
-    <section class="pad">
-      <div class="p-head rv">
-        <div class="p-avatar" id="pdAvatar"></div>
-        <div><h1 id="pdName">—</h1><p id="pdStatus">—</p></div>
-      </div>
-
-      <div class="rv" style="--i:1; margin-top:8px; padding:18px 20px; border:1px dashed var(--hair-2); border-radius:16px;">
-        <span class="micro">Görüşme</span>
-        <h3 style="margin:8px 0 4px; font-weight:200; font-style:italic; font-size:22px; color:var(--cream);" id="pdWhen">—</h3>
-        <p class="micro am" id="pdTip">—</p>
-      </div>
-
-      <p class="lede rv" style="--i:2; margin-top:24px">Görüşmede sorularını cevaplar, üyelik ücretini alır (ya da Dayanışma Üyeliği'ni onaylar) ve üyeliğini başlatırız. Kapıda bu ekranı göstermen yeterli.</p>
-
-      <div class="empty-end rv" style="--i:3">
-        <span class="micro">Fikrini değiştirdin mi?</span>
-        <button class="link" id="cancelPending">Başvuruyu iptal et</button>
-      </div>
-    </section>
-  </div>
-
-  <nav class="tabs" id="profileTabs" hidden>
+  <nav class="tabs" id="profileTabs">
     <a class="tab" href="jaza-topluluk.html"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H10l-5 4V5z"/></svg><span>Topluluk</span></a>
     <a class="tab" href="jaza-ana-sayfa.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg><span>Ana sayfa</span></a>
     <a class="tab" href="jaza-etkinlikler.html"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4"/></svg><span>Etkinlik</span></a>
     <a class="tab on" href="jaza-uyelik.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-4 3.1-6.4 7-6.4s7 2.4 7 6.4"/></svg><span>Profil</span></a>
   </nav>
 
-  <!-- success -->
-  <div class="panel" id="okPanel">
-    <button class="panel-x" id="okX" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <svg class="okmark" viewBox="0 0 58 58"><circle cx="29" cy="29" r="26" pathLength="100"/><path d="M18 30l8 8 15-17" pathLength="100"/></svg>
-    <div class="eyebrow"><span class="micro am" id="okEyebrow">Görüşmen planlandı</span></div>
-    <h1 class="pg" style="font-size:34px" id="okH1">Seni <em>bekliyoruz</em></h1>
-    <p class="lede" style="margin-bottom:6px" id="okLede">Jaza'da seni bekliyoruz.</p>
-    <div style="margin-top:20px"><button class="btn" id="okGo">Tamam</button></div>
-  </div>
-
-  <!-- legal: sözleşme -->
-  <div class="panel legal" id="sozlesmePanel">
-    <button class="panel-x" id="sozlesmeX" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <div class="eyebrow"><span class="micro">Hukuki metin</span></div>
-    <h1 class="pg">Üyelik <em>sözleşmesi</em></h1>
-    <p>Topluluğumuzun huzuru için birkaç basit madde:</p>
-    <ol>
-      <li><b>Taraflar.</b> Bu sözleşme, Jaza ile üye arasında düzenlenmiştir.</li>
-      <li><b>Üyeliğin başlaması.</b> Bu formu göndermek seni otomatik olarak üye yapmaz. Başvurundan sonra Jaza'da kısa bir tanışma görüşmesi yapılır; üyelik görüşmede ödenen ücretle (veya Dayanışma Üyeliği'nde onayla) birlikte başlar.</li>
-      <li><b>Süre.</b> Üyelik, görüşmede başladığı tarihten itibaren 12 ay sürer; süre sonunda karşılıklı onayla yenilenir.</li>
-      <li><b>Üyelik ücreti.</b> İki üyelik tipi vardır: <b>Standart Üyelik</b> (yıllık _______ ₺, aylık taksitle ödenebilir) ve <b>Dayanışma Üyeliği</b> (mali durumu uygun olmayan üyeler için ücretsiz). Tutar her yenilemede güncel fiyat üzerinden belirlenir.</li>
-      <li><b>Dayanışma Üyeliği'nin gözden geçirilmesi.</b> Dayanışma Üyeliği, başvuru sırasındaki mali duruma göre değerlendirilir; her yenilemede bu durum yeniden görüşülür ve gerekirse üyelik tipi karşılıklı olarak güncellenebilir.</li>
-      <li><b>İade ve cayma.</b> Standart Üyelik ücreti ödendikten sonra üyelikten erken ayrılma halinde, kalan süreye denk gelen tutar iade edilmez; süresi içinde kullanılmayan haklar (rezervasyon, etkinlik kontenjanı vb.) için de iade yapılmaz.</li>
-      <li><b>Kişisel üyelik.</b> Üyelik sana özeldir, başkasına devredilemez.</li>
-      <li><b>Davranış kuralları.</b> Üye, Jaza'yı diğer üyeler ve çalışanlar için saygılı, güvenli bir ortam olarak korumakla yükümlüdür; taciz, şiddet, mülke kasıtlı zarar verme veya tekrarlayan rahatsız edici davranış üyeliğin feshine neden olabilir.</li>
-      <li><b>Hasar ve zarar sorumluluğu.</b> Üye, Demo Odası'ndaki ekipmana, plaklara veya Jaza'nın diğer malzemelerine kasıtlı ya da ihmal sonucu verdiği zararlardan sorumludur; zarar bedeli üyeden talep edilebilir.</li>
-      <li><b>Demo Odası.</b> Rezervasyonlar en az 24 saat önceden yapılır; gelemeyecek olursan haber verirsin.</li>
-      <li><b>Etkinlikler.</b> Ücretsiz katılım kontenjan dahilinde geçerlidir.</li>
-      <li><b>Yaş sınırı.</b> Üyelik 18 yaş ve üzeri içindir.</li>
-      <li><b>Ayrılma.</b> İstediğin zaman, yazılı ya da sözlü olarak üyelikten ayrılabilirsin.</li>
-      <li><b>Üyeliğin feshi.</b> Jaza, bu sözleşmedeki davranış kurallarının ciddi veya tekrarlayan şekilde ihlali, ödemenin yapılmaması ya da yasa dışı bir eylem halinde üyeliği tek taraflı olarak sonlandırabilir; bu durumda ödenmiş ücret iade edilmez.</li>
-      <li><b>Sözleşmede değişiklik.</b> Jaza, bu sözleşmenin şartlarını güncelleyebilir; değişiklikler üyelere e-posta yoluyla bildirilir ve bir sonraki yenilemede geçerli olur.</li>
-      <li><b>Mücbir sebep.</b> Deprem, yangın, salgın hastalık veya resmi makam kararı gibi Jaza'nın kontrolü dışındaki durumlarda hizmetlerin geçici olarak durmasından Jaza sorumlu tutulamaz; üyelik süresi bu dönem kadar uzatılabilir.</li>
-      <li><b>Uyuşmazlıkların çözümü.</b> Bu sözleşmeden doğan uyuşmazlıklarda İstanbul Mahkemeleri ve İcra Daireleri yetkilidir.</li>
-    </ol>
-    <div style="margin-top:26px"><button class="link" data-back-to-form>← Forma dön</button></div>
-  </div>
-
-  <!-- legal: kvkk -->
-  <div class="panel legal" id="kvkkPanel">
-    <button class="panel-x" id="kvkkX" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <div class="eyebrow"><span class="micro">Hukuki metin</span></div>
-    <h1 class="pg">KVKK <em>aydınlatma metni</em></h1>
-    <p><b>Veri sorumlusu.</b> Bu formda topladığımız kişisel verilerin veri sorumlusu Jaza'dır. [Şirket unvanı, adres ve iletişim bilgileri buraya eklenecektir.]</p>
-    <p><b>İşlenen veriler.</b> Kimlik ve iletişim bilgilerin (ad, soyad, doğum tarihi, telefon, e-posta, isteğe bağlı Instagram hesabı), meslek / okul bilgin, acil durumda ulaşılacak kişinin bilgileri, imzan, müzik zevkine ve Jaza'ya katkına dair paylaştıkların, Dayanışma Üyeliği başvurusunda beyan ettiğin mali durum bilgisi, ve ayrıca açık rızanı verdiğin ölçüde doğum günü, pazarlama iletişimi ve fotoğraf / video tercihlerin.</p>
-    <p><b>İşleme amaçları.</b> Üyelik başvurunun değerlendirilmesi ve üyeliğin kurulması, görüşme ve rezervasyon süreçlerinin yürütülmesi, kapıda ve etkinliklerde kimlik/QR doğrulaması, üyelik ücretine ilişkin muhasebe işlemleri, çalma listelerinin ve etkinliklerin üyelerin zevkine göre şekillendirilmesi; ayrı rıza verdiğin ölçüde doğum günü jesti, pazarlama iletişimi ve fotoğraf / video paylaşımı.</p>
-    <p><b>Hukuki sebep.</b> Verilerin bir kısmı üyelik sözleşmesinin kurulması ve ifası, bir kısmı kanuni yükümlülüklerimizin (örn. muhasebe) yerine getirilmesi, bir kısmı da meşru menfaatimiz (güvenlik, kapıda doğrulama) kapsamında işlenir. Doğum günü jesti, pazarlama iletişimi ve fotoğraf / video kullanımı yalnızca formda ayrıca verdiğin açık rızaya dayanır ve bu rızayı profil ekranındaki tercihlerinden istediğin zaman geri çekebilirsin.</p>
-    <p><b>Aktarım.</b> Verilerin, yukarıdaki amaçlarla sınırlı olarak ödeme / muhasebe hizmeti aldığımız tedarikçilerle, e-posta ve SMS bildirim sağlayıcılarıyla ve yetkili kamu kurum ve kuruluşlarıyla (talep halinde, mevzuatın öngördüğü ölçüde) paylaşılması söz konusu olabilir. Verilerin yurt dışına aktarılması gereken bir durum olursa, bu ancak mevzuatın aradığı şartlar sağlandığında yapılır.</p>
-    <p><b>Toplama yöntemi.</b> Verilerin bu form aracılığıyla elektronik ortamda, doğrudan senden toplanmaktadır.</p>
-    <p><b>Saklama süresi.</b> Üyeliğin devamı boyunca ve üyelik sona erdikten sonra ilgili mevzuatın (ör. ticari defter ve belgelerin saklanmasına ilişkin süreler) öngördüğü süre kadar saklanır; bu sürenin sonunda silinir, yok edilir veya anonim hale getirilir.</p>
-    <p><b>Hakların.</b> 6698 sayılı KVKK'nın 11. maddesi uyarınca; kişisel verinin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme, eksik veya yanlış işlenmişse düzeltilmesini isteme, işlenmesini gerektiren sebepler ortadan kalkmışsa silinmesini veya yok edilmesini isteme, düzeltme / silme işlemlerinin verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme, işlenen verilerin münhasıran otomatik sistemlerle analiz edilmesi sonucunda aleyhine bir sonuç çıkmasına itiraz etme ve kanuna aykırı işleme sebebiyle zarara uğraman hâlinde zararın giderilmesini talep etme haklarına sahipsin.</p>
-    <p><b>Başvuru yöntemi.</b> Bu haklarını kullanmak için [e-posta adresi / açık adres buraya eklenecektir] üzerinden yazılı olarak Jaza'ya başvurabilirsin.</p>
-    <div style="margin-top:26px"><button class="link" data-back-to-form>← Forma dön</button></div>
-  </div>
-
   <div class="grain"></div>
   <div class="curtain"></div>
 </div>
-
-<div class="demo-ctl" id="dctl"><button data-s="gate">Giriş</button><button data-s="form">Form</button><button data-s="interview">Görüşme</button><button data-s="pending">Bekliyor</button><button data-s="profile">Üye</button></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -669,159 +333,19 @@ h1.pg em{ font-weight:200; }
 (function(){
   var $ = function(id){ return document.getElementById(id); };
 
-  /* ---------- chip group helper ---------- */
-  function chipGroup(containerId, options, multi){
-    var el = $(containerId), state = {};
-    el.innerHTML = options.map(function(o){ return '<button type="button" class="chip2" data-v="'+o+'">'+o+'</button>'; }).join('');
-    el.querySelectorAll('.chip2').forEach(function(b){
-      b.addEventListener('click', function(){
-        var v = b.dataset.v;
-        if (multi){ state[v] = !state[v]; b.classList.toggle('on', !!state[v]); }
-        else { Object.keys(state).forEach(function(k){ state[k] = false; }); state[v] = true;
-          el.querySelectorAll('.chip2').forEach(function(x){ x.classList.toggle('on', x === b); }); }
-      });
-    });
-    return { get: function(){ return Object.keys(state).filter(function(k){ return state[k]; }); } };
-  }
-
-  var genres = chipGroup('turler', ['Pop','Rock / Indie','Caz / Blues','Elektronik / House / Techno','Hip-hop / R&B','Türkçe pop / rock','Anadolu rock / psikedelik','Türk sanat / halk müziği','Klasik / enstrümantal','Lo-fi / ambient','Latin / dünya müziği'], true);
-  var heard = chipGroup('duyduk', ['Arkadaşımdan','Instagram','Mekanın önünden geçerken','Bir etkinlikte'], true);
-  var eventPrefs = chipGroup('etkinlikTur', ['Canlı konser','DJ seti','Plak dinleme gecesi','Açık mikrofon'], true);
-  var contrib = chipGroup('katki', ['DJ\'lik / set çalmak','Plak / müzik koleksiyonu','Canlı performans','Fotoğraf / video','Söyleşi / atölye','Organizasyon / gönüllülük','Sohbet ve enerji'], true);
-  function tierPick(id){
-    var el = $(id), v = null;
-    el.querySelectorAll('.tier-opt').forEach(function(b){
-      b.addEventListener('click', function(){
-        v = b.dataset.v;
-        el.querySelectorAll('.tier-opt').forEach(function(x){ x.classList.toggle('on', x === b); });
-      });
-    });
-    return { get: function(){ return v; } };
-  }
-  var uyelikTipi = tierPick('uyelikTipi');
-
-  /* ---------- interview scheduling ---------- */
-  var DAYS = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
-  var gunOptions = [];
-  for (var gi = 1; gi <= 6; gi++){
-    var gd = new Date(); gd.setDate(gd.getDate() + gi);
-    gunOptions.push(DAYS[gd.getDay()] + ' ' + gd.getDate());
-  }
-  var gorusmeGun = chipGroup('gorusmeGun', gunOptions, false);
-  var gorusmeSaat = chipGroup('gorusmeSaat', ['11:00','13:00','15:00','17:00','19:00'], false);
-  function updateIvSum(){
-    var g = gorusmeGun.get()[0], s = gorusmeSaat.get()[0];
-    $('ivSum').textContent = (g && s) ? (g + ' · ' + s) : 'Tarih seç';
-  }
-  $('gorusmeGun').addEventListener('click', updateIvSum);
-  $('gorusmeSaat').addEventListener('click', updateIvSum);
-
-  $('confirmInterview').addEventListener('click', function(){
-    var g = gorusmeGun.get()[0], s = gorusmeSaat.get()[0];
-    var bad = !g || !s;
-    $('ivErr').classList.toggle('show', bad);
-    if (bad){ $('ivErr').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
-
-    var p = JZ.store.get('profile', null);
-    if (p){ p.gorusmeGun = g; p.gorusmeSaat = s; p.gorusmeNot = $('fGorusmeNot').value.trim(); JZ.store.set('profile', p); }
-
-    var isDayanisma = p && p.uyelikTipi === 'Dayanışma Üyeliği';
-    $('okEyebrow').textContent = 'Görüşmen planlandı';
-    $('okH1').innerHTML = 'Seni <em>bekliyoruz</em>';
-    $('okLede').textContent = g + ' · ' + s + " Jaza'da seni bekliyoruz. Orada " + (isDayanisma ? 'başvurunu birlikte değerlendirip' : 'üyelik ücretini alıp') + ' üyeliğini başlatacağız.';
-    openPanel('okPanel');
-  });
-
-  function ynGroup(id){
-    var el = $(id), v = null;
-    el.querySelectorAll('button').forEach(function(b){
-      b.addEventListener('click', function(){ v = b.dataset.v; el.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x === b); }); });
-    });
-    return { get: function(){ return v; } };
-  }
-  var enstrumanYn = ynGroup('enstrumanYn');
-  $('enstrumanYn').addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    $('enstrumanDetay').hidden = b.dataset.v !== 'evet';
-  });
-  var plakYn = ynGroup('plakYn');
-  var sahneYn = ynGroup('sahneYn');
-
-  /* ---------- signature pad ---------- */
-  var canvas = $('sigPad'), ctx, drawing = false, hasSig = false;
-  function sizeCanvas(){
-    var r = canvas.getBoundingClientRect();
-    canvas.width = r.width * 2; canvas.height = r.height * 2;
-    ctx = canvas.getContext('2d');
-    ctx.scale(2,2); ctx.strokeStyle = '#E8A868'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  }
-  sizeCanvas();
-  function pos(e){ var r = canvas.getBoundingClientRect(); var p = e.touches ? e.touches[0] : e; return { x:p.clientX - r.left, y:p.clientY - r.top }; }
-  function start(e){ drawing = true; hasSig = true; var p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault(); }
-  function move(e){ if (!drawing) return; var p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault(); }
-  function end(){ drawing = false; }
-  canvas.addEventListener('pointerdown', start); canvas.addEventListener('pointermove', move);
-  window.addEventListener('pointerup', end);
-  $('sigClear').addEventListener('click', function(){ ctx.clearRect(0,0,canvas.width,canvas.height); hasSig = false; });
-
-  $('fTarih').value = (function(){ var d = new Date(); return JZ.pad(d.getDate())+'.'+JZ.pad(d.getMonth()+1)+'.'+d.getFullYear(); })();
-
-  /* ---------- legal overlays ---------- */
-  function openPanel(id){ var p = $(id); p.classList.remove('show'); void p.offsetWidth; p.classList.add('show'); p.scrollTop = 0; }
-  function closePanel(id){ $(id).classList.remove('show'); }
-  $('openSozlesme').addEventListener('click', function(){ openPanel('sozlesmePanel'); });
-  $('openKvkk').addEventListener('click', function(){ openPanel('kvkkPanel'); });
-  $('sozlesmeX').addEventListener('click', function(){ closePanel('sozlesmePanel'); });
-  $('kvkkX').addEventListener('click', function(){ closePanel('kvkkPanel'); });
-  document.querySelectorAll('[data-back-to-form]').forEach(function(b){
-    b.addEventListener('click', function(){ closePanel('sozlesmePanel'); closePanel('kvkkPanel'); });
-  });
-
-  /* ---------- submit ---------- */
-  var CODE_NAMES = ['Gece Kuşu','Kasnak','Tonearm','Mor Vinil','Sessiz Oda','Pikap Ali','Bakır Yolcu','Sessiz Plak'];
-
-  function markBad(el, bad){ el.classList.toggle('bad', bad); }
-
-  $('submitForm').addEventListener('click', function(){
-    var required = [['fAd',$('fAd')],['fSoyad',$('fSoyad')],['fDogum',$('fDogum')],['fTel',$('fTel')],['fEposta',$('fEposta')],['fOnayAd',$('fOnayAd')]];
-    var ok = true;
-    required.forEach(function(pair){ var bad = !pair[1].value.trim(); markBad(pair[1], bad); if (bad) ok = false; });
-    if (!$('cYas').checked || !$('cSozlesme').checked || !$('cKvkk').checked) ok = false;
-    if (!hasSig) ok = false;
-    if (!uyelikTipi.get()) ok = false;
-    $('formErr').classList.toggle('show', !ok);
-    if (!ok){ $('formErr').scrollIntoView({ behavior:'smooth', block:'center' }); return; }
-
-    var codeName = CODE_NAMES[Math.floor(Math.random() * CODE_NAMES.length)];
-    var profile = {
-      ad: $('fAd').value.trim(), soyad: $('fSoyad').value.trim(), dogum: $('fDogum').value.trim(),
-      tel: $('fTel').value.trim(), eposta: $('fEposta').value.trim(), insta: $('fInsta').value.trim(),
-      meslek: $('fMeslek').value.trim(), acil: $('fAcil').value.trim(),
-      duyduk: heard.get(), duydukDiger: $('fDuydukDiger').value.trim(),
-      turler: genres.get(), turDiger: $('fTurDiger').value.trim(), sanatci: $('fSanatci').value.trim(), sarki: $('fSarki').value.trim(),
-      etkinlikTur: eventPrefs.get(), enstruman: enstrumanYn.get(),
-      katki: contrib.get(), gece: $('fGece').value.trim(), plak: plakYn.get(), sahne: sahneYn.get(),
-      pazarlama: $('cPazarlama').checked, dogumgunu: $('cDogumgunu').checked, foto: $('cFoto').checked,
-      uyelikTipi: uyelikTipi.get(), status: 'pending',
-      codeName: codeName, memberNo: '00' + (1 + Math.floor(Math.random()*98)),
-      joinedAt: Date.now(), ref: 'JAZA-MEM-' + Math.random().toString(36).slice(2,7).toUpperCase()
-    };
-    JZ.store.set('profile', profile);
-
-    showState('interview');
-  });
-
-  $('okX').addEventListener('click', function(){ closePanel('okPanel'); });
-  $('okGo').addEventListener('click', function(){ closePanel('okPanel'); showState('pending'); });
-  $('cancelPending').addEventListener('click', function(){
-    JZ.store.set('profile', null);
-    showState('gate');
-  });
+  /* sample data — stands in until the real sign-up / membership form ships */
+  var SAMPLE_PROFILE = {
+    ad: 'Elif', soyad: 'Yılmaz', eposta: 'elif@ornek.com', tel: '+90 532 123 45 67',
+    insta: '@elifyilmaz', meslek: 'Grafik tasarımcı', dogum: '14.03.1998',
+    turler: ['Caz / Blues', 'Lo-fi / ambient'], sanatci: 'Bill Evans, Nina Simone, Khruangbin', sarki: 'Nina Simone — Feeling Good',
+    katki: ['DJ\'lik / set çalmak'], uyelikTipi: 'Standart Üyelik',
+    pazarlama: true, dogumgunu: true, foto: false,
+    codeName: 'Gece Kuşu', memberNo: '0042', joinedAt: Date.now(), ref: 'JAZA-MEM-DEMO1'
+  };
 
   /* ---------- profile render ---------- */
   function renderProfile(){
-    var p = JZ.store.get('profile', null);
-    if (!p) return;
+    var p = JZ.store.get('profile', null) || SAMPLE_PROFILE;
     $('pAvatar').textContent = (p.ad ? p.ad[0] : 'J').toUpperCase();
     $('pName').textContent = (p.ad + ' ' + p.soyad).trim() || 'Üye';
     $('pSince').textContent = p.codeName + ' · ' + new Date(p.joinedAt).getFullYear() + "'den beri üye";
@@ -871,20 +395,10 @@ h1.pg em{ font-weight:200; }
     JZ.qr($('qrbox'), 'https://jaza.app/uye/' + p.ref, 176);
   }
 
-  function renderPending(){
-    var p = JZ.store.get('profile', null);
-    if (!p) return;
-    $('pdAvatar').textContent = (p.ad ? p.ad[0] : 'J').toUpperCase();
-    $('pdName').textContent = (p.ad + ' ' + p.soyad).trim() || 'Aday';
-    $('pdStatus').textContent = 'Başvurun alındı · görüşme bekleniyor';
-    $('pdWhen').textContent = (p.gorusmeGun && p.gorusmeSaat) ? (p.gorusmeGun + ' · ' + p.gorusmeSaat) : 'Görüşme tarihi seçilmedi';
-    $('pdTip').textContent = p.uyelikTipi || 'Standart Üyelik';
-  }
-
   ['tglPazarlama','tglDogumgunu','tglFoto'].forEach(function(id){
     $(id).addEventListener('click', function(){
       var key = id === 'tglPazarlama' ? 'pazarlama' : id === 'tglDogumgunu' ? 'dogumgunu' : 'foto';
-      var p = JZ.store.get('profile', null); if (!p) return;
+      var p = JZ.store.get('profile', null) || JSON.parse(JSON.stringify(SAMPLE_PROFILE));
       p[key] = !p[key]; JZ.store.set('profile', p);
       $(id).classList.toggle('on', p[key]);
     });
@@ -894,31 +408,8 @@ h1.pg em{ font-weight:200; }
   card.addEventListener('click', function(){ flipped = !flipped; card.style.setProperty('--flip', flipped ? '180deg' : '0deg'); });
   card.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.click(); } });
 
-  $('resetProfile').addEventListener('click', function(){
-    JZ.store.set('profile', null);
-    showState('gate');
-  });
-
-  $('startForm').addEventListener('click', function(){ showState('form'); });
-
-  /* ---------- state switching ---------- */
-  function showState(s){
-    var isGate = s === 'gate', isForm = s === 'form', isInterview = s === 'interview', isPending = s === 'pending', isMember = s === 'profile';
-    $('gateScroll').hidden = !isGate; $('gateAct').hidden = !isGate;
-    $('formScroll').hidden = !isForm; $('formAct').hidden = !isForm;
-    $('interviewScroll').hidden = !isInterview; $('ivAct').hidden = !isInterview;
-    $('pendingScroll').hidden = !isPending;
-    $('profileScroll').hidden = !isMember;
-    $('profileTabs').hidden = !(isPending || isMember);
-    document.querySelectorAll('#dctl button').forEach(function(b){ b.classList.toggle('on', b.dataset.s === s); });
-    if (isMember) renderProfile();
-    if (isPending) renderPending();
-    JZ.observe();
-  }
-  document.querySelectorAll('#dctl button').forEach(function(b){ b.addEventListener('click', function(){ showState(b.dataset.s); }); });
-
-  showState(JZ.store.get('profile', null) ? 'pending' : 'gate');
-  setTimeout(function(){ $('gateH1').classList.add('in'); $('h1').classList.add('in'); $('ivH1').classList.add('in'); }, 60);
+  renderProfile();
+  JZ.observe();
 })();
 </script>
 </body>
